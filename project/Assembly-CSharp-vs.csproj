@@ -53,11 +53,13 @@
      <Compile Include="Assets\Scripts\ColonyBeing.cs" />
      <Compile Include="Assets\Scripts\Insect.cs" />
      <Compile Include="Assets\Scripts\Nurse.cs" />
+     <Compile Include="Assets\Scripts\Pheromone.cs" />
      <Compile Include="Assets\Scripts\Queen.cs" />
      <Compile Include="Assets\Scripts\Simulator.cs" />
      <Compile Include="Assets\Scripts\Soldier.cs" />
      <Compile Include="Assets\Scripts\Spider.cs" />
      <Compile Include="Assets\Scripts\Termite.cs" />
+     <Compile Include="Assets\Scripts\ViewFrustum.cs" />
      <Compile Include="Assets\Scripts\Worker.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>

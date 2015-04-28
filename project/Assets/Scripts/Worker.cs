@@ -5,6 +5,7 @@ public class Worker : MonoBehaviour {
 
 	public GameObject target;
 	public string behaviour;
+	public GameObject pheromone;
 
 	// Use this for initialization
 	void Start () {
@@ -28,11 +29,12 @@ public class Worker : MonoBehaviour {
 
 	public void findFood(){
 		GameObject closestFood = GetClosestObject ("Food");
-		Debug.Log("Closest Object is " + closestFood.name);
+		//Debug.Log("Closest Object is " + closestFood.name);
 		this.target = closestFood;
 		transform.position = Vector3.MoveTowards(transform.position, target.transform.position, 0.03f);
 		if (target.transform.position == this.transform.position) {
-			Destroy(target);
+			//Destroy(target);
+			InvokeRepeating ("putPheromone", 0, 2);
 			behaviour = "GoToQueen";
 			goToQueen();
 		}
@@ -43,6 +45,13 @@ public class Worker : MonoBehaviour {
 		GameObject queen = objectsWithTag [0];
 		this.target = queen;
 		transform.position = Vector3.MoveTowards(transform.position, target.transform.position, 0.03f);
+		if (target.transform.position == this.transform.position) {
+			CancelInvoke("putPheromone");
+		}
+	}
+
+	public void putPheromone(){
+		Instantiate (pheromone, this.transform.position, Quaternion.identity);
 	}
 
 	public GameObject GetClosestObject(string tag)
