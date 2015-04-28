@@ -46,5 +46,10 @@ public class Soldier : Ant {
 		rigidbody.velocity = velocity;
 		transform.LookAt (target);
 	}
+
+	void attack(){
+
 	}
+
+}
 

@@ -1,11 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Worker : MonoBehaviour {
+public class Worker : Ant {
 
 	public GameObject target;
-	public string behaviour;
 	public GameObject pheromone;
+
+	private GameObject[] gates;
+
+	void Awake(){
+		gates = GameObject.FindGameObjectsWithTag ("Gate");
+	}
 
 	// Use this for initialization
 	void Start () {
@@ -14,11 +19,15 @@ public class Worker : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (behaviour == "GoToQueen") {
+		/*if (behaviour == "GoToQueen") {
 			goToQueen ();
 		} else {
 			findFood ();
+		}*/
+		if (behaviour != "OK") {
+			goToClosestGate ();	
 		}
+
 
 
 		/*if (target.transform.position == this.transform.position) {
@@ -31,9 +40,13 @@ public class Worker : MonoBehaviour {
 		GameObject closestFood = GetClosestObject ("Food");
 		//Debug.Log("Closest Object is " + closestFood.name);
 		this.target = closestFood;
+		int foodPoint = closestFood.gameObject.GetComponent<Food> ().foodPoint;
 		transform.position = Vector3.MoveTowards(transform.position, target.transform.position, 0.03f);
 		if (target.transform.position == this.transform.position) {
-			//Destroy(target);
+			if(foodPoint <= 0){
+				Destroy(target);
+			} else {
+				foodPoint = foodPoint - 1;}
 			InvokeRepeating ("putPheromone", 0, 2);
 			behaviour = "GoToQueen";
 			goToQueen();
@@ -47,6 +60,7 @@ public class Worker : MonoBehaviour {
 		transform.position = Vector3.MoveTowards(transform.position, target.transform.position, 0.03f);
 		if (target.transform.position == this.transform.position) {
 			CancelInvoke("putPheromone");
+			behaviour = "FindFood";
 		}
 	}
 
@@ -72,5 +86,20 @@ public class Worker : MonoBehaviour {
 			}
 		}
 		return closestObject;
+	}
+
+	public void goToClosestGate(){
+		GameObject closestGate = GetClosestObject("Gate");
+		transform.position = Vector3.MoveTowards(transform.position, closestGate.transform.position, 0.03f);
+		if (transform.position == closestGate.transform.position) {
+			if(closestGate.name == "GateA"){
+				transform.position = gateB.transform.position;
+				behaviour = "OK";
+			} else {
+				transform.position = gateA.transform.position;
+				behaviour = "OK";
+			}
+					
+		}
 	}
 }

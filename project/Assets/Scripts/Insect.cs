@@ -5,6 +5,8 @@ public class Insect : MonoBehaviour {
 
 	public int speed;
 	public string behaviour;
+	public GameObject gateA;
+	public GameObject gateB;
 
 	// Use this for initialization
 	void Start () {
@@ -27,6 +29,10 @@ public class Insect : MonoBehaviour {
 		transform.Translate(1,0,0);
 		
 	}*/
+
+	public void followPheromone(){
+
+	}
 
 
 }

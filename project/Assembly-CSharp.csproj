@@ -51,6 +51,7 @@
      <Compile Include="Assets\Scripts\Ant.cs" />
      <Compile Include="Assets\Scripts\Cleaning.cs" />
      <Compile Include="Assets\Scripts\ColonyBeing.cs" />
+     <Compile Include="Assets\Scripts\Environment\Food.cs" />
      <Compile Include="Assets\Scripts\Insect.cs" />
      <Compile Include="Assets\Scripts\Nurse.cs" />
      <Compile Include="Assets\Scripts\Pheromone.cs" />
