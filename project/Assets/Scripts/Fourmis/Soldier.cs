@@ -26,7 +26,7 @@ public class Soldier : Ant {
 		if (curWayPoint < wayPoints.Length) {
 			target = wayPoints[curWayPoint].position;
 			moveDirection = target - transform.position;
-			velocity = rigidbody.velocity;
+			velocity = rigidbody2D.velocity;
 			
 			if(moveDirection.magnitude < 1){
 				curWayPoint++;
@@ -43,7 +43,7 @@ public class Soldier : Ant {
 			}
 		}
 		
-		rigidbody.velocity = velocity;
+		rigidbody2D.velocity = velocity;
 		transform.LookAt (target);
 	}
 

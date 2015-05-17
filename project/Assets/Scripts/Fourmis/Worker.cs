@@ -19,14 +19,14 @@ public class Worker : Ant {
 	
 	// Update is called once per frame
 	void Update () {
-		/*if (behaviour == "GoToQueen") {
+		if (behaviour == "GoToQueen") {
 			goToQueen ();
 		} else {
 			findFood ();
-		}*/
-		if (behaviour != "OK") {
-			goToClosestGate ();	
 		}
+		/*if (behaviour != "OK") {
+			goToClosestGate ();	
+		}*/
 
 
 

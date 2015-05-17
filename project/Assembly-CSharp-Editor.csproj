@@ -46,15 +46,9 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\UPAToolkit\Editor\EditorGUI\UPAEditorWindow.cs" />
-     <Compile Include="Assets\UPAToolkit\Editor\EditorGUI\UPAExportWindow.cs" />
-     <Compile Include="Assets\UPAToolkit\Editor\EditorGUI\UPAImageCreationWindow.cs" />
-     <Compile Include="Assets\UPAToolkit\Editor\EditorGUI\UPAImageEditorPreview.cs" />
-     <Compile Include="Assets\UPAToolkit\Editor\UPACustomTypes.cs" />
-     <Compile Include="Assets\UPAToolkit\Editor\UPADrawer.cs" />
-     <Compile Include="Assets\UPAToolkit\Editor\UPAImage.cs" />
-     <Compile Include="Assets\UPAToolkit\Editor\UPALayer.cs" />
-     <Compile Include="Assets\UPAToolkit\Editor\UPASession.cs" />
+     <Compile Include="Assets\Endless2DTerrain\Core\Scripts\Editor\EndlessMenu.cs" />
+     <Compile Include="Assets\Endless2DTerrain\Core\Scripts\Editor\TerrainEditor.cs" />
+     <None Include="Assets\Endless2DTerrain\Demos\Resources\Shaders\VertexColorUnlit.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
  </Reference>
