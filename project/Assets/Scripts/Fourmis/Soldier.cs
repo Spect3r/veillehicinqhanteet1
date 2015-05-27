@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class Soldier : Ant {
@@ -26,7 +26,7 @@ public class Soldier : Ant {
 		if (curWayPoint < wayPoints.Length) {
 			target = wayPoints[curWayPoint].position;
 			moveDirection = target - transform.position;
-			velocity = rigidbody2D.velocity;
+			velocity = rigidbody.velocity;
 			
 			if(moveDirection.magnitude < 1){
 				curWayPoint++;
@@ -43,11 +43,28 @@ public class Soldier : Ant {
 			}
 		}
 		
-		rigidbody2D.velocity = velocity;
+		rigidbody.velocity = velocity;
 		transform.LookAt (target);
 	}
 
 	void attack(){
+
+	}
+	public override void followPheromone ()
+	{
+		throw new System.NotImplementedException ();
+	}
+
+	public override void goToClosestGate(){
+
+	}
+	public override void goToQueen (){
+
+	}
+	public override void findFood(){
+
+	}
+	public override void putPheromone(){
 
 	}
 
