@@ -1,13 +1,14 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
-public class Insect : MonoBehaviour {
+public abstract class Insect : MonoBehaviour {
 
 	public int speed;
 	public string behaviour;
 	public GameObject gateA;
 	public GameObject gateB;
-
+	public string espece;
+	/*
 	// Use this for initialization
 	void Start () {
 		SeekBehaviour seekBehaviour = GetComponent<SeekBehaviour>();
@@ -20,19 +21,21 @@ public class Insect : MonoBehaviour {
 		//randomMove ();
 		/*if(behaviour == "SeekBehaviour"){
 			seekBehaviour.
-		}*/
+		}*//*
 	
 	}
-
+*/
 	/*public void randomMove(){
 
 		transform.Translate(1,0,0);
 		
 	}*/
 
-	public void followPheromone(){
+	public abstract void followPheromone();
 
-	}
-
+	public abstract void goToClosestGate();
+	public abstract void goToQueen ();
+	public abstract void findFood();
+	
 
 }
