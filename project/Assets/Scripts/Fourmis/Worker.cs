@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class Worker : Ant {
@@ -14,29 +14,28 @@ public class Worker : Ant {
 
 	// Use this for initialization
 	void Start () {
-		//findFood ();
+		findFood ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (behaviour == "GoToQueen") {
-			goToQueen ();
+			goToQueen();
 		} else {
 			findFood ();
 		}
-		/*if (behaviour != "OK") {
-			goToClosestGate ();	
-		}*/
+		if (behaviour != "OK") {
+			goToQueen();	
+		}
 
 
-
-		/*if (target.transform.position == this.transform.position) {
+		if (target.transform.position == this.transform.position) {
 			behaviour = "SearchFood";
 			findFood();
-		}*/
+		}
 	}
 
-	public void findFood(){
+	public override void findFood(){
 		GameObject closestFood = GetClosestObject ("Food");
 		//Debug.Log("Closest Object is " + closestFood.name);
 		this.target = closestFood;
@@ -47,13 +46,13 @@ public class Worker : Ant {
 				Destroy(target);
 			} else {
 				foodPoint = foodPoint - 1;}
-			InvokeRepeating ("putPheromone", 0, 2);
-			behaviour = "GoToQueen";
-			goToQueen();
+				//InvokeRepeating ("putPheromone", 0, 2);
+				behaviour = "GoToQueen";
+				goToQueen();
 		}
 	}
 
-	public void goToQueen (){
+	public override void goToQueen (){
 		GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag("Queen");
 		GameObject queen = objectsWithTag [0];
 		this.target = queen;
@@ -62,9 +61,13 @@ public class Worker : Ant {
 			CancelInvoke("putPheromone");
 			behaviour = "FindFood";
 		}
+		ant_pheromone.setMessage ("food");
+		GameObject clone = (GameObject) Instantiate (pheromone);
+		clone.renderer.material.SetColor("_SpecColor", Color.red);
+
 	}
 
-	public void putPheromone(){
+	public override void putPheromone(){
 		Instantiate (pheromone, this.transform.position, Quaternion.identity);
 	}
 
@@ -88,7 +91,7 @@ public class Worker : Ant {
 		return closestObject;
 	}
 
-	public void goToClosestGate(){
+	public override void goToClosestGate(){
 		GameObject closestGate = GetClosestObject("Gate");
 		transform.position = Vector3.MoveTowards(transform.position, closestGate.transform.position, 0.03f);
 		if (transform.position == closestGate.transform.position) {
@@ -101,5 +104,10 @@ public class Worker : Ant {
 			}
 					
 		}
+	}
+
+	public override void followPheromone ()
+	{
+		throw new System.NotImplementedException ();
 	}
 }
