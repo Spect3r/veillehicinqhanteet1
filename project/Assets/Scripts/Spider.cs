@@ -12,4 +12,9 @@ public class Spider : MonoBehaviour {
 	void Update () {
 	
 	}
+	
+	public void eatInsect(){
+
+	}
+
 }
