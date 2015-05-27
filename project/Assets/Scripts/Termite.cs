@@ -12,4 +12,9 @@ public class Termite : MonoBehaviour {
 	void Update () {
 	
 	}
+	
+	/*public abstract override void goToClosestGate();
+	public abstract override void goToQueen ();
+	public abstract override void findFood();
+	public abstract void putPheromone();*/
 }
