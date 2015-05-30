@@ -48,6 +48,7 @@
   <ItemGroup>
      <Compile Include="Assets\EntitySpawn.cs" />
      <Compile Include="Assets\Scripts\Agent.cs" />
+     <Compile Include="Assets\Scripts\AgentInterface.cs" />
      <Compile Include="Assets\Scripts\AntTest\AntController.cs" />
      <Compile Include="Assets\Scripts\AntTest\AntFlee.cs" />
      <Compile Include="Assets\Scripts\AntTest\AntSeek.cs" />
