@@ -1,0 +1,15 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="D:\documents\Projet TX52 Drones\Unity\DroneMix\Assets\Scripts\ClickMovement.cs">
+    <Files>
+      <File FileName="D:\documents\Projet TX52 Drones\Unity\DroneMix\Assets\Scripts\CircleMovement.cs" Line="27" Column="24" />
+      <File FileName="D:\documents\Projet TX52 Drones\Unity\DroneMix\Assets\Scripts\Formation\CircleFormation.cs" Line="40" Column="3" />
+      <File FileName="D:\documents\Projet TX52 Drones\Unity\DroneMix\Assets\Scripts\GOSelection.cs" Line="29" Column="40" />
+      <File FileName="D:\documents\Projet TX52 Drones\Unity\DroneMix\Assets\Scripts\ClickMovement.cs" Line="58" Column="24" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
