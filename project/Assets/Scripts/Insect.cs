@@ -34,5 +34,25 @@ public class Insect : MonoBehaviour {
 
 	}
 
+	public GameObject GetClosestObject(string tag)
+	{
+		//find all gameObjects with tag "tag"
+		GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag(tag);
+		GameObject closestObject = null;
+		foreach (GameObject obj in objectsWithTag)
+		{
+			if(!closestObject)
+			{
+				closestObject = obj;
+			}
+			//compares distances
+			if(Vector3.Distance(transform.position, obj.transform.position) <= Vector3.Distance(transform.position, closestObject.transform.position))
+			{
+				closestObject = obj;
+			}
+		}
+		return closestObject;
+	}
+
 
 }

@@ -3,9 +3,9 @@ using System.Collections;
 
 public class Wandering : MonoBehaviour {
 	
-	public float rotationSpeed;
-	public float movementSpeed;
-	public float rotationTime;
+	public float rotationSpeed = 10;
+	public float movementSpeed = 10;
+	public float rotationTime = 2;
 	
 	void Start()
 	{
@@ -25,7 +25,8 @@ public class Wandering : MonoBehaviour {
 	void Update() {
 		
 		transform.Rotate (new Vector3 (0, 0, rotationSpeed * Time.deltaTime));
-		transform.position += transform.up*movementSpeed*Time.deltaTime;
+		//transform.position += transform.up*movementSpeed*Time.deltaTime;
+		rigidbody2D.velocity = Vector2.up*movementSpeed*Time.deltaTime;
 
 
 		

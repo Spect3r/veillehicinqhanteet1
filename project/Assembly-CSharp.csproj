@@ -47,6 +47,8 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\GroundSelection.cs" />
+     <Compile Include="Assets\Scripts\AbstractAgent.cs" />
+     <Compile Include="Assets\Scripts\Action.cs" />
      <Compile Include="Assets\Scripts\Actions\SeekBehaviour.cs" />
      <Compile Include="Assets\Scripts\Actions\Wandering.cs" />
      <Compile Include="Assets\Scripts\Camera\RTSLikeCamera.cs" />
@@ -54,8 +56,11 @@
      <Compile Include="Assets\Scripts\Environment\Food.cs" />
      <Compile Include="Assets\Scripts\Fourmis\Ant.cs" />
      <Compile Include="Assets\Scripts\Fourmis\Cleaning.cs" />
+     <Compile Include="Assets\Scripts\Fourmis\Cocoon.cs" />
      <Compile Include="Assets\Scripts\Fourmis\Nurse.cs" />
+     <Compile Include="Assets\Scripts\Fourmis\PatrolSoldier.cs" />
      <Compile Include="Assets\Scripts\Fourmis\Queen.cs" />
+     <Compile Include="Assets\Scripts\Fourmis\Simulateur.cs" />
      <Compile Include="Assets\Scripts\Fourmis\Soldier.cs" />
      <Compile Include="Assets\Scripts\Fourmis\Worker.cs" />
      <Compile Include="Assets\Scripts\Insect.cs" />

@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
-public class Worker : Ant {
+public class Worker : Ant, AbstractAgent {
 
 	public GameObject target;
 	public GameObject pheromone;
-
+	private bool foodOn = false;
 	private GameObject[] gates;
 
 	void Awake(){
@@ -68,38 +69,63 @@ public class Worker : Ant {
 		Instantiate (pheromone, this.transform.position, Quaternion.identity);
 	}
 
-	public GameObject GetClosestObject(string tag)
-	{
-		//find all gameObjects with tag "tag"
-		GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag(tag);
-		GameObject closestObject = null;
-		foreach (GameObject obj in objectsWithTag)
-		{
-			if(!closestObject)
-			{
-				closestObject = obj;
-			}
-			//compares distances
-			if(Vector3.Distance(transform.position, obj.transform.position) <= Vector3.Distance(transform.position, closestObject.transform.position))
-			{
-				closestObject = obj;
-			}
-		}
-		return closestObject;
+	Collider2D[] getPerception(){
+		perceptions = Physics2D.OverlapCircleAll(transform.position, 3f);
 	}
 
-	public void goToClosestGate(){
-		GameObject closestGate = GetClosestObject("Gate");
-		transform.position = Vector3.MoveTowards(transform.position, closestGate.transform.position, 0.03f);
-		if (transform.position == closestGate.transform.position) {
-			if(closestGate.name == "GateA"){
-				transform.position = gateB.transform.position;
-				behaviour = "OK";
-			} else {
-				transform.position = gateA.transform.position;
-				behaviour = "OK";
-			}
+
+
+	List<Action> makeDecision(){
+		List<Action> actions;
+		foreach(Collider2D collider in perceptions){
+			if(isEnemy(collider)){
+				actions.Add(new Action("flee", enemy));
+				actions.Add(new Action("putWarningPheromone"));
+			} 
+			else
+			{
+				if(foodOn == true){
+					if(this.transform.position == gateA.transform.position){
+						actions.Add(new Action("enterColony", gateB));
+						actions.Add(new Action("goToWarehouse", warehouse));
+					}
+					else{
+						actions.Add(new Action("goToColony", gateA));
+					}
+				}
+				else{
+					if(isFood(collider)){
+						if(Food.transform.position == this.transform.position){
+							actions.Add(new Action("takeFood", gateB));
+							actions.Add(new Action("putPheromone", warehouse));
+						}
+						else{
+							actions.Add(new Action("goToFood", food));
+						}
+					}
+					else{
+						if(isPheromone(collider)){
+							if(this.transform.position == pheromone.transform.position){
+								actions.Add(new Action("deletePheromone", pheromone));
+							}
+							else{
+								actions.Add(new Action("goToPheromone", pheromone));
+							}
+						}
+						else{
+							actions.Add(new Action("Wandering", null));
+						}
+					}
 					
+				}		
+					
+			}
+
 		}
 	}
+		
+
 }
+
+
+

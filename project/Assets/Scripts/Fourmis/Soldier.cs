@@ -1,12 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
-public class Soldier : Ant {
-
-	public Transform[] wayPoints;
+public class Soldier : Ant, AbstractAgent {
+	
 	//public float speed;
-	public int curWayPoint;
-	public bool doPatrol = true;
 	public Vector3 target;
 	public Vector3 moveDirection;
 	public Vector3 velocity;
@@ -18,38 +16,38 @@ public class Soldier : Ant {
 	
 	// Update is called once per frame
 	void Update () {
-		patrol ();
 
 	}
 
-	void patrol(){
-		if (curWayPoint < wayPoints.Length) {
-			target = wayPoints[curWayPoint].position;
-			moveDirection = target - transform.position;
-			velocity = rigidbody2D.velocity;
-			
-			if(moveDirection.magnitude < 1){
-				curWayPoint++;
-			}else{
-				velocity = moveDirection.normalized * speed;
-			}
-		}
-		else{
-			if(doPatrol){
-				curWayPoint = 0;
-			}
-			else{
-				velocity = Vector3.zero;
-			}
-		}
-		
-		rigidbody2D.velocity = velocity;
-		transform.LookAt (target);
-	}
+
 
 	void attack(){
 
 	}
 
-}
+	Collider2D[] getPerception(){
+		perceptions = Physics2D.OverlapCircleAll(transform.position, 3f);
+	}
+	
+	
+	
+	List<Action> makeDecision(){
+		List<Action> actions;
+		foreach(Collider2D collider in perceptions){
+			if(isEnemy(collider)){
+				actions.Add(new Action("attack", collider));
+				actions.Add(new Action("putPheromone", null));
+			}
+			else{
+					if(isPheromone(collider)){
+						actions.Add(new Action("goToPheromone", collider));
+					}else{
+						actions.Add(new Action("wandering", null));
+					}	
+			}
+	
+		}
 
+	}
+
+}
