@@ -49,6 +49,7 @@
      <Compile Include="Assets\GroundSelection.cs" />
      <Compile Include="Assets\Scripts\AbstractAgent.cs" />
      <Compile Include="Assets\Scripts\Action.cs" />
+     <Compile Include="Assets\Scripts\Actions\FleeBehaviour.cs" />
      <Compile Include="Assets\Scripts\Actions\SeekBehaviour.cs" />
      <Compile Include="Assets\Scripts\Actions\Wandering.cs" />
      <Compile Include="Assets\Scripts\Camera\RTSLikeCamera.cs" />
@@ -69,6 +70,7 @@
      <Compile Include="Assets\Scripts\Spider.cs" />
      <Compile Include="Assets\Scripts\Termite.cs" />
      <Compile Include="Assets\Scripts\ViewFrustum.cs" />
+     <Compile Include="Assets\Scripts\wanderingSpider.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
  </Reference>

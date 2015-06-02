@@ -4,24 +4,18 @@ using System.Collections;
 public class Insect : MonoBehaviour {
 
 	public int speed;
-	public string behaviour;
+	public int life;
 	public GameObject gateA;
 	public GameObject gateB;
 
 	// Use this for initialization
 	void Start () {
-		SeekBehaviour seekBehaviour = GetComponent<SeekBehaviour>();
-		behaviour = "Wandering";
 
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		//randomMove ();
-		/*if(behaviour == "SeekBehaviour"){
-			seekBehaviour.
-		}*/
-	
+
 	}
 
 	/*public void randomMove(){
@@ -29,6 +23,14 @@ public class Insect : MonoBehaviour {
 		transform.Translate(1,0,0);
 		
 	}*/
+
+	bool isGate(GameObject gameObject)
+	{
+		if (gameObject.tag == "Gate")
+						return true;
+				else
+						return false;
+	}
 
 	public void followPheromone(){
 

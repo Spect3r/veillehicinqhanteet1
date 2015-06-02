@@ -2,10 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Soldier : Ant, AbstractAgent {
+public class WanderingSpider : Ant, AbstractAgent {
 
-	private int strength = 2;
-	private int life = 6;
+	private int radius = 2;
 
 	// Use this for initialization
 	void Start () {
@@ -14,41 +13,42 @@ public class Soldier : Ant, AbstractAgent {
 	
 	// Update is called once per frame
 	void Update () {
-
-	}
 	
-	void attack(Insect target){
-		target.life -= this.strength;
 	}
 
-	void isPheromone(){
-
-	}
-
-	Collider2D[] getPerception(){
+	Collider2D getPerception(){
 		Collider2D[] perceptions = Physics2D.OverlapCircleAll(transform.position, 3f);
 	}
 	
-	
-	
-	List<Action> makeDecision(Collider2D perceptions){
+	List<Action> makeDecision(Collider2D[] perceptions){
 		List<Action> actions;
 		foreach(Collider2D collider in perceptions){
-			GameObject gameObject = collider.gameObject;
-			if(isEnemy(gameObject)){
+			// if there is an enemy in field of view
+			if(isEnemy(collider))
+			{
+				//attack
 				actions.Add(new Action("attack", collider));
-				actions.Add(new Action("putPheromone", null));
 			}
-			else{
-					if(isPheromone(collider)){
+			else
+			{
+				//if there is a gate in field of view
+				if(isGate(collider.gameObject))
+   			    {
+					if(collider.gameObject.transform.position - this.transform.position <= radius)
+						//enter in the colony
+						actions.Add(new Action("teleportation", collider));
+					else
+						//go to the gate
 						actions.Add(new Action("seek", collider));
-					}else{
-						actions.Add(new Action("wandering", null));
-					}	
+				}
+				else 
+				{
+					//else wandering
+					actions.Add(new Action("wandering", null));
+				}
 			}
-	
 		}
-
+		
 	}
 
 	Vector2 applyAction(List<Action> actions)
@@ -83,5 +83,4 @@ public class Soldier : Ant, AbstractAgent {
 		}
 		return direction;
 	}
-
 }

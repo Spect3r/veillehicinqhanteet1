@@ -4,6 +4,10 @@ using System.Collections.Generic;
 
 public class Spider : AbstractAgent {
 
+	private int strength = 4;
+	private int speed = 10;
+	private int life = 10;
+
 	// Use this for initialization
 	void Start () {
 	
@@ -14,16 +18,16 @@ public class Spider : AbstractAgent {
 	
 	}
 
-	Collider2D getPerception(){
-		perceptions = Physics2D.OverlapCircleAll(transform.position, 3f);
+	public bool isEnemy(GameObject enemy){
+		if (enemy.tag == "Spider" || enemy.tag == "Termite")
+			return true;
+		else
+			return false;
 	}
 
-	List<Action> makeDecision(){
-		List<Action> actions;
-		if(perceptions[i] == enemy){
-			actions.Add(new Action("attack", enemy));
-		} else {
-			actions.Add(new Action("wandering", null));
-		}
+	void attack(Insect target){
+		target.life -= this.strength;
 	}
+
+
 }

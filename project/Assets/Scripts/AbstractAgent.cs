@@ -7,6 +7,10 @@ public abstract class AbstractAgent {
 	Collider2D[] perceptions;
 	List<Action> actions = new List<Action>();
 
+	public SeekBehaviour SeekBehaviour;
+	public FleeBehaviour FleeBehaviour;
+	public Wandering Wandering;
+
 	void Update () {
 		/* Perceptions and decisions */
 		if(Simulateur.state == true) {
@@ -15,7 +19,7 @@ public abstract class AbstractAgent {
 			// Perception
 			perceptions = getPerception();
 			// Decision making
-			actions = makeDecision();
+			actions = makeDecision(perceptions);
 			
 		}
 		/* Apply actions */
@@ -31,7 +35,7 @@ public abstract class AbstractAgent {
 	}
 	
 	Collider2D[] getPerception();
-	List<Action> makeDecision();
+	List<Action> makeDecision(Collider2D[] perceptions);
 	
 	Vector2 applyAction(List<Action> actions);
 	void move(Vector2 direction);

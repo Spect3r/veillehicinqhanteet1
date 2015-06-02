@@ -33,6 +33,7 @@ public class Wandering : MonoBehaviour {
 	}
 
 	void run(){
+	
 
 	}
 

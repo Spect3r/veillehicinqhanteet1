@@ -5,12 +5,16 @@ using System.Collections.Generic;
 public class Worker : Ant, AbstractAgent {
 
 	public GameObject target;
-	public GameObject pheromone;
+	public GameObject warningPheromone;
+	public GameObject foodPheromone;
 	private bool foodOn = false;
 	private GameObject[] gates;
+	private GameObject[] warehouse;
+
 
 	void Awake(){
 		gates = GameObject.FindGameObjectsWithTag ("Gate");
+		warehouse = GameObject.FindGameObjectWithTag ("Warehouse");
 	}
 
 	// Use this for initialization
@@ -20,21 +24,7 @@ public class Worker : Ant, AbstractAgent {
 	
 	// Update is called once per frame
 	void Update () {
-		if (behaviour == "GoToQueen") {
-			goToQueen ();
-		} else {
-			findFood ();
-		}
-		/*if (behaviour != "OK") {
-			goToClosestGate ();	
-		}*/
 
-
-
-		/*if (target.transform.position == this.transform.position) {
-			behaviour = "SearchFood";
-			findFood();
-		}*/
 	}
 
 	public void findFood(){
@@ -66,50 +56,56 @@ public class Worker : Ant, AbstractAgent {
 	}
 
 	public void putPheromone(){
-		Instantiate (pheromone, this.transform.position, Quaternion.identity);
+		Instantiate (foodPheromone, this.transform.position, Quaternion.identity);
 	}
+
+	public void deletePheromone(GameObject pheromone)
+	{
+		Destroy (pheromone);
+	}
+	
 
 	Collider2D[] getPerception(){
-		perceptions = Physics2D.OverlapCircleAll(transform.position, 3f);
+		Collider2D[] perceptions = Physics2D.OverlapCircleAll(transform.position, 3f);
 	}
 
 
 
-	List<Action> makeDecision(){
+	List<Action> makeDecision(Collider2D[] perceptions){
 		List<Action> actions;
 		foreach(Collider2D collider in perceptions){
 			if(isEnemy(collider)){
-				actions.Add(new Action("flee", enemy));
-				actions.Add(new Action("putWarningPheromone"));
+				actions.Add(new Action("flee", collider));
+				actions.Add(new Action("putPheromone", warningPheromone));
 			} 
 			else
 			{
 				if(foodOn == true){
 					if(this.transform.position == gateA.transform.position){
-						actions.Add(new Action("enterColony", gateB));
-						actions.Add(new Action("goToWarehouse", warehouse));
+						actions.Add(new Action("teleportation", gateB));
+						actions.Add(new Action("seek", warehouse));
 					}
 					else{
-						actions.Add(new Action("goToColony", gateA));
+						actions.Add(new Action("seek", gateA));
 					}
 				}
 				else{
 					if(isFood(collider)){
 						if(Food.transform.position == this.transform.position){
-							actions.Add(new Action("takeFood", gateB));
-							actions.Add(new Action("putPheromone", warehouse));
+							actions.Add(new Action("takeFood", collider));
+							actions.Add(new Action("putPheromone", foodPheromone));
 						}
 						else{
-							actions.Add(new Action("goToFood", food));
+							actions.Add(new Action("seek", collider));
 						}
 					}
 					else{
 						if(isPheromone(collider)){
-							if(this.transform.position == pheromone.transform.position){
-								actions.Add(new Action("deletePheromone", pheromone));
+							if(this.transform.position == collider.transform.position){
+								actions.Add(new Action("deletePheromone", collider.gameObject));
 							}
 							else{
-								actions.Add(new Action("goToPheromone", pheromone));
+								actions.Add(new Action("seek", foodPheromone));
 							}
 						}
 						else{
@@ -122,6 +118,44 @@ public class Worker : Ant, AbstractAgent {
 			}
 
 		}
+	}
+
+	Vector2 applyAction(List<Action> actions)
+	{
+		Vector2 direction = new Vector2 ();
+		foreach(Action action in actions)
+		{
+			if(action.getBehaviour() == "seek")
+			{
+				direction += SeekBehaviour.run(action.getTarget());
+			}
+			if(action.getBehaviour() == "flee")
+			{
+				direction += FleeBehaviour.run(action.getTarget());
+			}
+			if(action.getBehaviour() == "wandering")
+			{
+				direction += Wandering.run();
+			}
+			if(action.getBehaviour() == "teleportation")
+			{
+				this.transform.position = gateB.transform.position;
+			}
+			if(action.getBehaviour() == "putPheromone")
+			{
+				this.putPheromone();
+			}
+			if(action.getBehaviour() == "deletePheromone")
+			{
+				this.deletePheromone();
+			}
+		}
+		return direction;
+	}
+
+	void move(Vector2 direction)
+	{
+		this.rigidbody2D.AddForce (direction);
 	}
 		
 

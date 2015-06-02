@@ -19,20 +19,32 @@ public class Ant : Insect {
 		if (transform.position == closestGate.transform.position) {
 			if(closestGate.name == "GateA"){
 				transform.position = gateB.transform.position;
-				behaviour = "OK";
 			} else {
 				transform.position = gateA.transform.position;
-				behaviour = "OK";
 			}
 			
 		}
 	}
 
-	public bool isEnemy(){
-	
+	public bool isEnemy(GameObject enemy){
+		if (enemy.tag == "Spider" || enemy.tag == "Termite")
+				return true;
+		else
+				return false;
 	}
 
-	public bool isFood(){
+	public bool isFood(GameObject food){
+		if (food.tag == "Food")
+			return true;
+		else
+			return false;
 		
+	}
+
+	public void isPheromone(GameObject pheromone){
+		if (pheromone.tag == "FoodPheromone" || pheromone.tag == "WarningPheromone")
+			return true;
+		else
+			return false;
 	}
 }

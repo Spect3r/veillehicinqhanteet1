@@ -23,10 +23,10 @@ public class Queen : AbstractAgent {
 	}
 
 	Collider2D[] getPerception(){
-		perceptions = Physics2D.OverlapCircleAll(transform.position, 3f);
+		Collider2D[] perceptions = Physics2D.OverlapCircleAll(transform.position, 3f);
 	}
 	
-	List<Action> makeDecision(){
+	List<Action> makeDecision(Collider2D[] perceptions){
 		List<Action> actions;
 		foreach (Collider2D collider in perceptions) {
 			if(timer>=bornTime)
