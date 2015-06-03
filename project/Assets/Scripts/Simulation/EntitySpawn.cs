@@ -18,7 +18,7 @@ public class EntitySpawn : MonoBehaviour {
 		}
 
 		for (int i = 0; i<20; i++) {
-			Vector3 position = new Vector3(Random.Range(-10.0F, 10.0F), Random.Range(-10.0F, 10.0F));		
+			Vector2 position = new Vector2(Random.Range(-10.0F, 10.0F), Random.Range(-10.0F, 10.0F));		
 			Instantiate (worker, position, Quaternion.identity);
 			
 		}

@@ -13,7 +13,7 @@ public sealed class AntWorker : Ant {
 
 	void Awake(){
 		gate = GameObject.FindGameObjectWithTag ("Gate");
-		warehouse = GameObject.FindGameObjectWithTag ("Warehouse");
+		warehouse = new GameObject();//GameObject.FindGameObjectWithTag ("Warehouse");
 	}
 
 	/*public void findFood(){
@@ -111,7 +111,7 @@ public sealed class AntWorker : Ant {
 
 	protected override Vector2 applyAction(List<Action> actions)
 	{
-		Vector2 direction = new Vector2 ();
+		Vector2 direction = new Vector2 (1f,1f);
 		foreach(Action action in actions)
 		{
 			/*if(action.getBehaviour() == "seek")
@@ -144,7 +144,21 @@ public sealed class AntWorker : Ant {
 
 	protected override void move(Vector2 direction)
 	{
-		this.rigidbody2D.AddForce (direction);
+		// Kinematic movement
+		rigidbody2D.velocity = direction.normalized * speed;
+		
+		// Orientation
+		if(rigidbody2D.velocity.magnitude > 0) {
+			
+			Vector3 referenceForward = new Vector3(-1,0,0);
+			
+			float angle = Vector3.Angle(referenceForward, direction);
+			
+			float sign = Mathf.Sign(Vector3.Dot(new Vector3(0,1,0),direction));
+			
+			transform.rotation = Quaternion.Euler(new Vector3(0,0,angle * -sign));
+			
+		}
 	}
 		
 

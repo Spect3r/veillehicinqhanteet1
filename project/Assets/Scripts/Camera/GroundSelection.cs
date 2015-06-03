@@ -15,10 +15,6 @@ public class GroundSelection : MonoBehaviour {
 		camera = GameObject.FindGameObjectWithTag ("MainCamera");
 	
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		}
 
 	public void ChangeGround(){
 		if (text.text == "Sous-sol") {
