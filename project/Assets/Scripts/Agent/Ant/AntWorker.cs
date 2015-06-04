@@ -56,74 +56,112 @@ public sealed class AntWorker : Ant {
 
 	protected override List<Action> makeDecision(Collider2D[] perceptions){
 		List<Action> actions = new List<Action>();
-		foreach(Collider2D collider in perceptions){
 		
-			/*if(true) {
-				actions.Add(new Action("seek", homeIn));*/
-				
+		List<GameObject> ennemy = new List<GameObject>();
+		List<GameObject> food = new List<GameObject>();
+		//List<GameObject> pheromone = new List<GameObject>();
+		
+		foreach(Collider2D collider in perceptions){
 			if(isEnemy(collider.gameObject)){
-				actions.Add(new Action("flee", collider.gameObject));
-				//actions.Add(new Action("putPheromone", warningPheromone));
-			} 
-			else
-			{
-				if(carryingFood == true){
-					if(this.transform.position == homeIn.transform.position){
-						actions.Add(new Action("teleportation", homeOut));
-						//actions.Add(new Action("seek", warehouse));
+				ennemy.Add(collider.gameObject);
+			}
+			if(isFood(collider.gameObject)){
+				food.Add(collider.gameObject);
+			}
+			/*if(isPheromone(collider.gameObject)){
+				ennemy.Add(collider.gameObject);
+			}*/
+		}
+		
+		/*if(true) {
+			actions.Add(new Action("seek", homeIn));*/			
+		if(ennemy.Count > 0) 
+		{
+			foreach(GameObject target in ennemy)
+				actions.Add(new Action("flee", target));
+			
+			//actions.Add(new Action("putPheromone", warningPheromone));
+		} 
+		else
+		{
+			if(carryingFood == true){
+				if(this.transform.position == homeIn.transform.position){
+					actions.Add(new Action("teleportation", homeOut));
+					//actions.Add(new Action("seek", warehouse));
+				}
+				else{
+					actions.Add(new Action("seek", homeIn));
+				}
+			}
+			else{
+				if(food.Count > 0){
+					GameObject nearestFood = null;
+					
+					foreach(GameObject target in food) {
+						if(nearestFood != null) {
+							if(Vector2.Distance(nearestFood.transform.position, this.gameObject.transform.position) > Vector2.Distance(target.transform.position, this.gameObject.transform.position)) {
+								nearestFood = target;
+							}
+						}
+						else {
+							nearestFood = target;
+						}
+					}
+					
+					if(nearestFood.transform.position == this.transform.position){
+						actions.Add(new Action("takeFood", nearestFood));
+						//actions.Add(new Action("putPheromone", foodPheromone));
 					}
 					else{
-						actions.Add(new Action("seek", homeIn));
+							
+						actions.Add(new Action("seek", nearestFood));
 					}
 				}
 				else{
-					if(isFood(collider.gameObject)){
-						if(collider.transform.position == this.transform.position){
-							actions.Add(new Action("takeFood", collider.gameObject));
-							//actions.Add(new Action("putPheromone", foodPheromone));
+					/*if(isPheromone(collider.gameObject)){
+						if(this.transform.position == collider.transform.position){
+							actions.Add(new Action("deletePheromone", collider.gameObject));
 						}
 						else{
-							actions.Add(new Action("seek", collider.gameObject));
+							//actions.Add(new Action("seek", foodPheromone));
 						}
 					}
 					else{
-						if(isPheromone(collider.gameObject)){
-							if(this.transform.position == collider.transform.position){
-								actions.Add(new Action("deletePheromone", collider.gameObject));
-							}
-							else{
-								//actions.Add(new Action("seek", foodPheromone));
-							}
-						}
-						else{
-							actions.Add(new Action("wandering", null));
-						}
-					}
-					
-				}		
-					
+						//actions.Add(new Action("wandering", null));
+					}*/
+				}
+				
 			}
 		}
+		
 		return actions;
 	}
 
 	protected override Vector2 applyAction(List<Action> actions)
 	{
 		Vector2 direction = new Vector2 (); // = new Vector2 (1f,1f);
+		
+		/*bool seekDone = false;
+		bool fleeDone = false;
+		bool wanderingDone = false;*/
+		
 		foreach(Action action in actions)
 		{
 			// peut mettre un switch à la place
-			if(action.getBehaviour() == "seek")
+			if(action.getBehaviour() == "seek") // && !seekDone)
 			{
 				direction += this.seekBehaviour.run(this.gameObject, action.getTarget());
+				//seekDone = true;
 			}
-			if(action.getBehaviour() == "flee")
+			if(action.getBehaviour() == "flee") // && !fleeDone)
 			{
 				direction += this.fleeBehaviour.run(this.gameObject, action.getTarget());
+				//fleeDone = true;
 			}
-			if(action.getBehaviour() == "wandering")
+			if(action.getBehaviour() == "wandering") // && !wanderingDone)
 			{
 				direction += this.wanderingBehaviour.run(this.gameObject);
+				//wanderingDone = true;
 			}
 			/*if(action.getBehaviour() == "teleportation")
 			{
