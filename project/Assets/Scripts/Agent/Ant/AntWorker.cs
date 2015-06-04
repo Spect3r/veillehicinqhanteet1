@@ -4,16 +4,16 @@ using System.Collections.Generic;
 
 public sealed class AntWorker : Ant {
 
-	public GameObject target;
+	/*public GameObject target;
 	public GameObject warningPheromone;
 	public GameObject foodPheromone;
 	private bool foodOn = false;
 	private GameObject gate;
-	private GameObject warehouse;
+	private GameObject warehouse;*/
 
 	void Awake(){
-		gate = GameObject.FindGameObjectWithTag ("Gate");
-		warehouse = new GameObject();//GameObject.FindGameObjectWithTag ("Warehouse");
+		/*gate = GameObject.FindGameObjectWithTag ("Gate");
+		warehouse = new GameObject();//GameObject.FindGameObjectWithTag ("Warehouse");*/
 	}
 
 	/*public void findFood(){
@@ -55,7 +55,7 @@ public sealed class AntWorker : Ant {
 	
 
 	protected override Collider2D[] getPerception() {
-		return Physics2D.OverlapCircleAll(this.transform.position, 3f);
+		return Physics2D.OverlapCircleAll(this.transform.position, 10f);
 	}
 
 
@@ -63,11 +63,12 @@ public sealed class AntWorker : Ant {
 	protected override List<Action> makeDecision(Collider2D[] perceptions){
 		List<Action> actions = new List<Action>();
 		foreach(Collider2D collider in perceptions){
-			if(isEnemy(collider.gameObject)){
+			if(true) {
+			//if(isEnemy(collider.gameObject)){
 				actions.Add(new Action("flee", collider.gameObject));
-				actions.Add(new Action("putPheromone", warningPheromone));
+				//actions.Add(new Action("putPheromone", warningPheromone));
 			} 
-			else
+			/*else
 			{
 				if(foodOn == true){
 					if(this.transform.position == gateA.transform.position){
@@ -104,25 +105,25 @@ public sealed class AntWorker : Ant {
 					
 				}		
 					
-			}
+			}*/
 		}
 		return actions;
 	}
 
 	protected override Vector2 applyAction(List<Action> actions)
 	{
-		Vector2 direction = new Vector2 (1f,1f);
+		Vector2 direction = new Vector2 (); // = new Vector2 (1f,1f);
 		foreach(Action action in actions)
 		{
-			/*if(action.getBehaviour() == "seek")
+			if(action.getBehaviour() == "seek")
 			{
-				direction += SeekBehaviour.run(action.getTarget());
+				direction += this.seekBehaviour.run(this.gameObject, action.getTarget());
 			}
 			if(action.getBehaviour() == "flee")
 			{
-				direction += FleeBehaviour.run(action.getTarget());
+				direction += this.fleeBehaviour.run(this.gameObject, action.getTarget());
 			}
-			if(action.getBehaviour() == "wandering")
+			/*if(action.getBehaviour() == "wandering")
 			{
 				direction += Wandering.run();
 			}

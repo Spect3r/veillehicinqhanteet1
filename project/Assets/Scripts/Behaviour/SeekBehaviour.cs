@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SeekBehaviour : MonoBehaviour {
+public class SeekBehaviour {
 
-	public Vector2 run(GameObject target)
+	public Vector2 run(GameObject source, GameObject target)
 	{
-		/*Vector2 direction = target.transform.position - this.transform.position;
-		direction.Normalize ();*/
-		return new Vector2();
+		Vector2 direction = target.transform.position - source.transform.position;
+		
+		return direction.normalized;
 	}
 }

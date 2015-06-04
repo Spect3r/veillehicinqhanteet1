@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Wandering : MonoBehaviour {
+public class Wandering {
 	
-	/*public float rotationSpeed = 10;
+	public float rotationSpeed = 10;
 	public float movementSpeed = 10;
 	public float rotationTime = 2;
 	
-	void Start()
+	/*void Start()
 	{
 		Invoke("ChangeRotation",rotationTime);
 	}
@@ -30,11 +30,12 @@ public class Wandering : MonoBehaviour {
 
 
 		
-	}
-
-	void run(){
-	
-
 	}*/
+
+	public Vector2 run(GameObject source)
+	{
+			
+		return new Vector2(); //direction.normalized;
+	}
 
 }

@@ -4,8 +4,8 @@ using System.Collections;
 public abstract class Ant : Insect {
 
 	// Ant Knowledge
-	public GameObject gateA;
-	public GameObject gateB;
+	/*public GameObject gateA;
+	public GameObject gateB;*/
 
 	/*
 	A mettre dans un comportement ?

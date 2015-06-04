@@ -9,9 +9,9 @@ public abstract class Insect : AbstractAgent {
 	public int strengh;
 	
 	// Behaviour
-	public SeekBehaviour SeekBehaviour;
-	public FleeBehaviour FleeBehaviour;
-	public Wandering Wandering;
+	protected SeekBehaviour seekBehaviour = new SeekBehaviour();
+	protected FleeBehaviour fleeBehaviour = new FleeBehaviour();
+	protected Wandering wandering = new Wandering();
 
 	bool isGate(GameObject gameObject) {
 		if (gameObject.tag == "Gate")
