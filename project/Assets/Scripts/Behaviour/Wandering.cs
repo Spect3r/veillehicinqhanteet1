@@ -35,7 +35,7 @@ public class Wandering {
 	public Vector2 run(GameObject source)
 	{
 			
-		return new Vector2(); //direction.normalized;
+		return new Vector2(Random.Range(-1f,1f),Random.Range(-1f,1f)); //direction.normalized;
 	}
 
 }

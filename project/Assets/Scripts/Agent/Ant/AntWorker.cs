@@ -4,17 +4,11 @@ using System.Collections.Generic;
 
 public sealed class AntWorker : Ant {
 
-	/*public GameObject target;
-	public GameObject warningPheromone;
-	public GameObject foodPheromone;
-	private bool foodOn = false;
-	private GameObject gate;
-	private GameObject warehouse;*/
-
-	void Awake(){
-		/*gate = GameObject.FindGameObjectWithTag ("Gate");
-		warehouse = new GameObject();//GameObject.FindGameObjectWithTag ("Warehouse");*/
-	}
+	/*public GameObject warningPheromone;
+	public GameObject foodPheromone;*/
+	
+	private bool carryingFood = false;
+	
 
 	/*public void findFood(){
 		GameObject closestFood = GetClosestObject ("Food");
@@ -63,27 +57,30 @@ public sealed class AntWorker : Ant {
 	protected override List<Action> makeDecision(Collider2D[] perceptions){
 		List<Action> actions = new List<Action>();
 		foreach(Collider2D collider in perceptions){
-			if(true) {
-			//if(isEnemy(collider.gameObject)){
+		
+			/*if(true) {
+				actions.Add(new Action("seek", homeIn));*/
+				
+			if(isEnemy(collider.gameObject)){
 				actions.Add(new Action("flee", collider.gameObject));
 				//actions.Add(new Action("putPheromone", warningPheromone));
 			} 
-			/*else
+			else
 			{
-				if(foodOn == true){
-					if(this.transform.position == gateA.transform.position){
-						actions.Add(new Action("teleportation", gateB));
-						actions.Add(new Action("seek", warehouse));
+				if(carryingFood == true){
+					if(this.transform.position == homeIn.transform.position){
+						actions.Add(new Action("teleportation", homeOut));
+						//actions.Add(new Action("seek", warehouse));
 					}
 					else{
-						actions.Add(new Action("seek", gateA));
+						actions.Add(new Action("seek", homeIn));
 					}
 				}
 				else{
 					if(isFood(collider.gameObject)){
 						if(collider.transform.position == this.transform.position){
 							actions.Add(new Action("takeFood", collider.gameObject));
-							actions.Add(new Action("putPheromone", foodPheromone));
+							//actions.Add(new Action("putPheromone", foodPheromone));
 						}
 						else{
 							actions.Add(new Action("seek", collider.gameObject));
@@ -95,17 +92,17 @@ public sealed class AntWorker : Ant {
 								actions.Add(new Action("deletePheromone", collider.gameObject));
 							}
 							else{
-								actions.Add(new Action("seek", foodPheromone));
+								//actions.Add(new Action("seek", foodPheromone));
 							}
 						}
 						else{
-							actions.Add(new Action("Wandering", null));
+							actions.Add(new Action("wandering", null));
 						}
 					}
 					
 				}		
 					
-			}*/
+			}
 		}
 		return actions;
 	}
@@ -115,6 +112,7 @@ public sealed class AntWorker : Ant {
 		Vector2 direction = new Vector2 (); // = new Vector2 (1f,1f);
 		foreach(Action action in actions)
 		{
+			// peut mettre un switch à la place
 			if(action.getBehaviour() == "seek")
 			{
 				direction += this.seekBehaviour.run(this.gameObject, action.getTarget());
@@ -123,11 +121,11 @@ public sealed class AntWorker : Ant {
 			{
 				direction += this.fleeBehaviour.run(this.gameObject, action.getTarget());
 			}
-			/*if(action.getBehaviour() == "wandering")
+			if(action.getBehaviour() == "wandering")
 			{
-				direction += Wandering.run();
+				direction += this.wanderingBehaviour.run(this.gameObject);
 			}
-			if(action.getBehaviour() == "teleportation")
+			/*if(action.getBehaviour() == "teleportation")
 			{
 				this.transform.position = gateB.transform.position;
 			}

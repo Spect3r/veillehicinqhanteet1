@@ -11,7 +11,7 @@ public abstract class Insect : AbstractAgent {
 	// Behaviour
 	protected SeekBehaviour seekBehaviour = new SeekBehaviour();
 	protected FleeBehaviour fleeBehaviour = new FleeBehaviour();
-	protected Wandering wandering = new Wandering();
+	protected Wandering wanderingBehaviour = new Wandering();
 
 	bool isGate(GameObject gameObject) {
 		if (gameObject.tag == "Gate")

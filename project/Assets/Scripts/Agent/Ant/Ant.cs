@@ -4,8 +4,13 @@ using System.Collections;
 public abstract class Ant : Insect {
 
 	// Ant Knowledge
-	/*public GameObject gateA;
-	public GameObject gateB;*/
+	protected GameObject homeIn;
+	protected GameObject homeOut;
+	
+	void Awake(){
+		homeIn = GameObject.FindGameObjectWithTag ("AntHomeIn");
+		homeOut = GameObject.FindGameObjectWithTag ("AntHomeOut");
+	}
 
 	/*
 	A mettre dans un comportement ?
