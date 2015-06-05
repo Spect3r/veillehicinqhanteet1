@@ -8,6 +8,7 @@ public sealed class AntWorker : Ant {
 	public GameObject foodPheromone;*/
 	
 	private bool carryingFood = false;
+	private bool isHome = false;
 	
 
 	/*public void findFood(){
@@ -74,63 +75,82 @@ public sealed class AntWorker : Ant {
 		}
 		
 		/*if(true) {
-			actions.Add(new Action("seek", homeIn));*/			
+			actions.Add(new Action("seek", homeIn));
+		}*/
 		if(ennemy.Count > 0) 
 		{
 			foreach(GameObject target in ennemy)
 				actions.Add(new Action("flee", target));
 			
 			//actions.Add(new Action("putPheromone", warningPheromone));
-		} 
+		}
 		else
 		{
 			if(carryingFood == true){
-				if(this.transform.position == homeIn.transform.position){
-					actions.Add(new Action("teleportation", homeOut));
-					//actions.Add(new Action("seek", warehouse));
+				if(isHome == true) {				
+					if(Vector2.Distance(this.transform.position, warehouse.transform.position) < 0.3f){
+						actions.Add(new Action("dropFood", null));
+					}					
+					else {
+						actions.Add(new Action("seek", warehouse));
+					}
 				}
-				else{
-					actions.Add(new Action("seek", homeIn));
+				else {				
+					if(Vector2.Distance(this.transform.position, homeIn.transform.position) < 0.3f){
+						actions.Add(new Action("teleportationIn", null));
+					}
+					else{
+						actions.Add(new Action("seek", homeIn));
+					}
 				}
 			}
 			else{
-				if(food.Count > 0){
-					GameObject nearestFood = null;
-					
-					foreach(GameObject target in food) {
-						if(nearestFood != null) {
-							if(Vector2.Distance(nearestFood.transform.position, this.gameObject.transform.position) > Vector2.Distance(target.transform.position, this.gameObject.transform.position)) {
+				if(isHome == true) {
+					if(Vector2.Distance(this.transform.position, homeOut.transform.position) < 0.3f){
+						actions.Add(new Action("teleportationOut", null));
+					}
+					else{
+						actions.Add(new Action("seek", homeOut));
+					}
+				}
+				else {
+					if(food.Count > 0){
+						GameObject nearestFood = null;
+						
+						foreach(GameObject target in food) {
+							if(nearestFood != null) {
+								if(Vector2.Distance(nearestFood.transform.position, this.gameObject.transform.position) > Vector2.Distance(target.transform.position, this.gameObject.transform.position)) {
+									nearestFood = target;
+								}
+							}
+							else {
 								nearestFood = target;
 							}
 						}
-						else {
-							nearestFood = target;
-						}
-					}
-					
-					if(nearestFood.transform.position == this.transform.position){
-						actions.Add(new Action("takeFood", nearestFood));
-						//actions.Add(new Action("putPheromone", foodPheromone));
-					}
-					else{
-							
-						actions.Add(new Action("seek", nearestFood));
-					}
-				}
-				else{
-					/*if(isPheromone(collider.gameObject)){
-						if(this.transform.position == collider.transform.position){
-							actions.Add(new Action("deletePheromone", collider.gameObject));
+						
+						if(Vector2.Distance(nearestFood.transform.position, this.transform.position) < 0.3f){
+							actions.Add(new Action("takeFood", nearestFood));
+							//actions.Add(new Action("putPheromone", foodPheromone));
 						}
 						else{
-							//actions.Add(new Action("seek", foodPheromone));
+								
+							actions.Add(new Action("seek", nearestFood));
 						}
 					}
 					else{
-						//actions.Add(new Action("wandering", null));
-					}*/
+						/*if(isPheromone(collider.gameObject)){
+							if(this.transform.position == collider.transform.position){
+								actions.Add(new Action("deletePheromone", collider.gameObject));
+							}
+							else{
+								//actions.Add(new Action("seek", foodPheromone));
+							}
+						}
+						else{
+							//actions.Add(new Action("wandering", null));
+						}*/
+					}
 				}
-				
 			}
 		}
 		
@@ -163,11 +183,25 @@ public sealed class AntWorker : Ant {
 				direction += this.wanderingBehaviour.run(this.gameObject);
 				//wanderingDone = true;
 			}
-			/*if(action.getBehaviour() == "teleportation")
+			if(action.getBehaviour() == "takeFood")
 			{
-				this.transform.position = gateB.transform.position;
+				carryingFood = true;
 			}
-			if(action.getBehaviour() == "putPheromone")
+			if(action.getBehaviour() == "dropFood")
+			{
+				carryingFood = false;
+			}
+			if(action.getBehaviour() == "teleportationIn")
+			{
+				this.transform.position = homeOut.transform.position;
+				this.isHome = true;
+			}
+			if(action.getBehaviour() == "teleportationOut")
+			{
+				this.transform.position = homeIn.transform.position;
+				this.isHome = false;
+			}
+			/*if(action.getBehaviour() == "putPheromone")
 			{
 				this.putPheromone();
 			}

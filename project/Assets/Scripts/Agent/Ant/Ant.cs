@@ -6,10 +6,12 @@ public abstract class Ant : Insect {
 	// Ant Knowledge
 	protected GameObject homeIn;
 	protected GameObject homeOut;
+	protected GameObject warehouse;
 	
 	void Awake(){
 		homeIn = GameObject.FindGameObjectWithTag ("AntHomeIn");
 		homeOut = GameObject.FindGameObjectWithTag ("AntHomeOut");
+		warehouse = GameObject.FindGameObjectWithTag ("AntWarehouse");
 	}
 
 	/*
