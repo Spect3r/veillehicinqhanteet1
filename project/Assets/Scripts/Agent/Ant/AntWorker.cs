@@ -10,6 +10,9 @@ public sealed class AntWorker : Ant {
 	private bool carryingFood = false;
 	private bool isHome = false;
 	
+	protected override void initialisation() {
+		this.animation = this.gameObject.GetComponent<Animator>();
+	}
 
 	/*public void findFood(){
 		GameObject closestFood = GetClosestObject ("Food");
@@ -50,7 +53,7 @@ public sealed class AntWorker : Ant {
 	
 
 	protected override Collider2D[] getPerception() {
-		return Physics2D.OverlapCircleAll(this.transform.position, 10f);
+		return Physics2D.OverlapCircleAll(this.transform.position, 4f);
 	}
 
 
@@ -138,6 +141,9 @@ public sealed class AntWorker : Ant {
 						}
 					}
 					else{
+						
+						actions.Add(new Action("wandering", null));
+					
 						/*if(isPheromone(collider.gameObject)){
 							if(this.transform.position == collider.transform.position){
 								actions.Add(new Action("deletePheromone", collider.gameObject));
@@ -218,17 +224,20 @@ public sealed class AntWorker : Ant {
 		// Kinematic movement
 		rigidbody2D.velocity = direction.normalized * speed;
 		
-		// Orientation
+		// Orientation		
 		if(rigidbody2D.velocity.magnitude > 0) {
-			
-			Vector3 referenceForward = new Vector3(-1,0,0);
-			
-			float angle = Vector3.Angle(referenceForward, direction);
-			
-			float sign = Mathf.Sign(Vector3.Dot(new Vector3(0,1,0),direction));
-			
+			Vector3 referenceForward = new Vector3(-1,0,0);			
+			float angle = Vector3.Angle(referenceForward, direction);			
+			float sign = Mathf.Sign(Vector3.Dot(new Vector3(0,1,0),direction));			
 			transform.rotation = Quaternion.Euler(new Vector3(0,0,angle * -sign));
-			
+		}
+		
+		// Animation
+		if(animation != null) {
+			if(rigidbody2D.velocity.magnitude > 0)
+				animation.SetBool("moving", true);
+			else
+				animation.SetBool("moving", false);
 		}
 	}
 		

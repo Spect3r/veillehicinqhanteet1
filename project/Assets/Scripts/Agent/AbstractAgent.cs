@@ -6,6 +6,12 @@ public abstract class AbstractAgent : MonoBehaviour {
 
 	private Collider2D[] perceptions;
 	private List<Action> actions = new List<Action>();
+	
+	void Start () {
+		initialisation();
+	}
+	
+	protected virtual void initialisation() {}
 
 	void Update () {
 		/* Perceptions and decisions */
