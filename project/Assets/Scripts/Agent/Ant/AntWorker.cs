@@ -211,6 +211,7 @@ public sealed class AntWorker : Ant {
 			if(action.getBehaviour() == "teleportationOut")
 			{
 				this.transform.position = homeIn.transform.position;
+				this.transform.rotation = Quaternion.AngleAxis(Random.Range(-180f,180f), new Vector3(0f,0f,1f));
 				this.isHome = false;
 			}
 			/*if(action.getBehaviour() == "putPheromone")
