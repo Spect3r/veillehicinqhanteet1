@@ -191,7 +191,13 @@ public sealed class AntWorker : Ant {
 			}
 			if(action.getBehaviour() == "takeFood")
 			{
-				carryingFood = true;
+				if(action.getTarget() != null) {
+					action.getTarget().GetComponent<Food>().takeFood();
+					carryingFood = true;
+				}
+				else {
+					Debug.Log("You can't eat that if there is nothing left !");
+				}
 			}
 			if(action.getBehaviour() == "dropFood")
 			{
