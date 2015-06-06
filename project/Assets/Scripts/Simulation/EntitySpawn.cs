@@ -15,8 +15,13 @@ public class EntitySpawn : MonoBehaviour {
 		}
 
 		for (int i = 0; i<20; i++) {
-			Vector2 position = new Vector2(Random.Range(-10.0F, 10.0F), Random.Range(-10.0F, 10.0F));		
-			Instantiate (worker, position, Quaternion.identity);			
+			// Random position
+			Vector2 position = new Vector2(Random.Range(-10.0F, 10.0F), Random.Range(-10.0F, 10.0F));
+			
+			// Random orientation
+			Quaternion orientation = Quaternion.AngleAxis(Random.Range(-180f,180f), new Vector3(0f,0f,1f));
+					
+			Instantiate (worker, position, orientation);			
 		}
 	}
 }
