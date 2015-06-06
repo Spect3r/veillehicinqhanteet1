@@ -12,7 +12,7 @@ public class RTSLikeCamera : MonoBehaviour {
 	float sensitivityDistance = 50;
 	float damping = 5;
 	float minFOV = 3;
-	float maxFOV = 20;
+	float maxFOV = 30;
 	
 	// Use this for initialization
 	void Start () {

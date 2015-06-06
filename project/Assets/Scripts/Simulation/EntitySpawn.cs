@@ -11,10 +11,10 @@ public class EntitySpawn : MonoBehaviour {
 
 		for (int i = 0; i<20; i++) {
 			Vector2 position = new Vector2(Random.Range(-25.0F, 25.0F), Random.Range(-25.0F, 25.0F));		
-			Instantiate (food, position, Quaternion.identity);			
+			//Instantiate (food, position, Quaternion.identity);			
 		}
 
-		for (int i = 0; i<20; i++) {
+		for (int i = 0; i<40; i++) {
 			// Random position
 			Vector2 position = new Vector2(Random.Range(-10.0F, 10.0F), Random.Range(-10.0F, 10.0F));
 			

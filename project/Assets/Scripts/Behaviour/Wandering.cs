@@ -38,7 +38,7 @@ public class Wandering {
 		Vector2 directionFromRotation = source.transform.rotation * referenceForward;
 		
 		Vector2 newDirection = Quaternion.AngleAxis(Random.Range(0f,10f)-Random.Range(0f,10f), source.transform.forward) * directionFromRotation; 
-		
+				
 		return newDirection;
 	}
 

@@ -557,9 +557,9 @@ GameObject:
   - 4: {fileID: 1070326568}
   - 212: {fileID: 1070326567}
   - 68: {fileID: 1070326569}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Underground
-  m_TagString: Untagged
+  m_TagString: Border
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -826,7 +826,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1166927001}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 46, y: -16.3999996, z: 0}
+  m_LocalPosition: {x: 46.6399994, y: -16.3999996, z: 0}
   m_LocalScale: {x: .349999994, y: .349999994, z: 1}
   m_Children: []
   m_Father: {fileID: 2105851896}
@@ -941,9 +941,9 @@ GameObject:
   - 4: {fileID: 2030776745}
   - 212: {fileID: 2030776744}
   - 68: {fileID: 2030776746}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Background
-  m_TagString: Untagged
+  m_TagString: Border
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
