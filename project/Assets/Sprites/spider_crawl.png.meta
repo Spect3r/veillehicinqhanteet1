@@ -1,0 +1,256 @@
+fileFormatVersion: 2
+guid: 1f6b62f3d793da74eb27d00382d6e2d7
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: crawl-1
+    21300002: crawl-2
+    21300004: crawl-3
+    21300006: crawl-4
+    21300008: crawl-5
+    21300010: crawl-6
+    21300012: crawl-7
+    21300014: crawl-8
+    21300016: crawl-9
+    21300018: crawl-10
+    21300020: crawl-11
+    21300022: crawl-12
+    21300024: crawl-13
+    21300026: crawl-14
+    21300028: crawl-15
+    21300030: crawl-16
+    21300032: crawl-17
+    21300034: crawl-18
+    21300036: crawl-19
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 1024
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: crawl-1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 592
+        width: 120
+        height: 148
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: crawl-2
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 592
+        width: 120
+        height: 148
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: crawl-3
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 592
+        width: 120
+        height: 148
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: crawl-4
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 592
+        width: 120
+        height: 148
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: crawl-5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 444
+        width: 120
+        height: 148
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: crawl-6
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 444
+        width: 120
+        height: 148
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: crawl-7
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 444
+        width: 120
+        height: 148
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: crawl-8
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 444
+        width: 120
+        height: 148
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: crawl-9
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 296
+        width: 120
+        height: 148
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: crawl-10
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 296
+        width: 120
+        height: 148
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: crawl-11
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 296
+        width: 120
+        height: 148
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: crawl-12
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 296
+        width: 120
+        height: 148
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: crawl-13
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 148
+        width: 120
+        height: 148
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: crawl-14
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 148
+        width: 120
+        height: 148
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: crawl-15
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 148
+        width: 120
+        height: 148
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: crawl-16
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 148
+        width: 120
+        height: 148
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: crawl-17
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 120
+        height: 148
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: crawl-18
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 0
+        width: 120
+        height: 148
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: crawl-19
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 0
+        width: 120
+        height: 148
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
