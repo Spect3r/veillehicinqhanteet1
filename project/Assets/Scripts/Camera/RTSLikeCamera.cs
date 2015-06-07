@@ -7,7 +7,6 @@ public class RTSLikeCamera : MonoBehaviour {
 	//public float distance = 5.0f;
 
 	GameObject ground;
-	GameObject background;
 
 	float distance = 60;
 	float sensitivityDistance = 50;
@@ -20,7 +19,6 @@ public class RTSLikeCamera : MonoBehaviour {
 		Screen.showCursor = true;
 		distance = camera.fieldOfView;
 		ground = GameObject.FindGameObjectWithTag ("Ground");
-		background = GameObject.FindGameObjectWithTag ("Underground");
 		
 	}
 	

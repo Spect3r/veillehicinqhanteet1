@@ -1,0 +1,125 @@
+﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+
+public class SpiderDigger : Spider {
+
+	public GameObject hole;
+	private bool isDigging = true;
+	private bool holeCreates = false;
+
+	protected override Collider2D[] getPerception(){
+		return Physics2D.OverlapCircleAll(this.transform.position, 3f);
+	}
+	
+	protected override List<Action> makeDecision(Collider2D[] perceptions){
+		List<Action> actions = new List<Action>();
+		
+		List<GameObject> enemies = new List<GameObject>();
+
+		foreach (Collider2D collider in perceptions) {
+				if (isEnemy (collider.gameObject)) {
+						enemies.Add (collider.gameObject);
+				}
+		}
+		//if there is some enemies in the field of view
+		if (enemies.Count > 0) {
+			GameObject enemy = this.getClosestEntity (enemies);
+			if (Vector2.Distance (this.transform.position, enemy.transform.position) < 0.3f) {
+					actions.Add (new Action ("attack", enemy));
+			} else {
+					actions.Add (new Action ("seek", enemy));
+			}
+		} 
+		else 
+		{
+			if (Vector2.Distance (this.transform.position, hole.transform.position) < 0.3f)
+			{
+				if (isDigging == true) {		
+					if(holeCreates == false)
+					{
+						Debug.Log("Create a hole");
+						actions.Add(new Action("createHole", null));
+					}
+					else
+					{
+						Debug.Log("Construct the hole");
+						actions.Add(new Action("constructHole", null));
+					}
+				}
+			}
+			else
+			{
+				actions.Add (new Action ("seek", this.hole));
+			}	
+		}
+		return actions;
+	}
+	
+	protected override Vector2 applyAction(List<Action> actions)
+	{
+		Vector2 direction = new Vector2 (); // = new Vector2 (1f,1f);
+		
+		foreach(Action action in actions)
+		{
+			switch(action.getBehaviour())
+			{
+			case "attack" :
+				if(action.getTarget().tag == "AntWorker")
+				{
+					action.getTarget().GetComponent<AntWorker>().takeDamage(this.strength);
+				}
+				else if(action.getTarget().tag == "AntSoldier")
+					action.getTarget().GetComponent<AntSoldier>().takeDamage(this.strength);
+				else
+					Debug.Log("Je ne reconnais pas cet ennemi");
+				break;
+			case "createHole" :
+				this.createHole();
+				break;
+			case "constructHole" :
+				this.constructHole();
+				break;
+			case "seek" :
+				direction += this.seekBehaviour.run(this.gameObject, action.getTarget());
+				break;
+			}
+		}
+		return direction;
+	}
+	
+	protected override void move(Vector2 direction) {
+		
+		// Kinematic movement
+		rigidbody2D.velocity = direction.normalized * speed;
+		
+		// Orientation		
+		if (rigidbody2D.velocity.magnitude > 0) {
+			Vector3 referenceForward = new Vector3 (-1, 0, 0);			
+			float angle = Vector3.Angle (referenceForward, direction);			
+			float sign = Mathf.Sign (Vector3.Dot (new Vector3 (0, 1, 0), direction));			
+			transform.rotation = Quaternion.Euler (new Vector3 (0, 0, angle * -sign));
+		}
+	}
+
+	private void createHole()
+	{
+		GameObject childObject = Instantiate(hole,transform.position,transform.rotation) as GameObject;
+		this.hole = childObject;
+		holeCreates = true;
+	}
+	
+	private void constructHole()
+	{
+		if(hole.transform.localScale.x >= 10.0f && hole.transform.localScale.y >= 10.0f)
+		{
+			isDigging = false;
+		}
+		else
+		{
+			Debug.Log("+0.5");
+			hole.transform.localScale += new Vector3(0.03f,0.03f,0);
+		}
+	}
+
+}
