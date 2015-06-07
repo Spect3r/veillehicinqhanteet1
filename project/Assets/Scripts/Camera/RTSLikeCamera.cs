@@ -10,9 +10,9 @@ public class RTSLikeCamera : MonoBehaviour {
 
 	float distance = 60;
 	float sensitivityDistance = 50;
-	float damping = 5;
+	float damping = 10;
 	float minFOV = 3;
-	float maxFOV = 20;
+	float maxFOV = 70;
 	
 	// Use this for initialization
 	void Start () {
@@ -28,7 +28,7 @@ public class RTSLikeCamera : MonoBehaviour {
 		float mousePosX = Input.mousePosition.x; 
 		float mousePosY = Input.mousePosition.y; 
 		float scrollDistance = 5f; 
-		float scrollSpeed = 40;
+		float scrollSpeed = 200;
 		if (Input.GetMouseButton(0))
 		{
 			if (mousePosX < scrollDistance) //left movement

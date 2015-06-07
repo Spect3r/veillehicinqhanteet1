@@ -49,7 +49,7 @@ public class EntitySpawn : MonoBehaviour {
 		}
 		for (int i = 0; i<1; i++) {
 			// Random position
-			Vector2 position = new Vector2(69.0f,18.0f);
+			Vector2 position = new Vector2(414.0f,18.0f);
 			
 			// Random orientation
 			Quaternion orientation = Quaternion.AngleAxis(Random.Range(-180f,180f), new Vector3(0f,0f,1f));
