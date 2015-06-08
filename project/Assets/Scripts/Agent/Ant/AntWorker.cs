@@ -115,8 +115,8 @@ public sealed class AntWorker : Ant {
 							actions.Add(new Action("dropFood", null));
 						}					
 						else {
-							//actions.Add(new Action("seek", warehouse));
-							actions.Add(new Action("wandering", null));
+							actions.Add(new Action("seek", warehouse));
+							//actions.Add(new Action("wandering", null));
 						}
 					}
 					else {				
@@ -240,8 +240,7 @@ public sealed class AntWorker : Ant {
 			
 			if(action.getBehaviour() == "avoidCollision")
 			{
-				
-				Vector2 referenceForward = new Vector2(-1,0);	
+				Vector2 referenceForward = new Vector2(0,1);
 				Vector2 directionFromRotation = this.transform.rotation * referenceForward;
 				
 				if(!isInCollision)
@@ -265,10 +264,10 @@ public sealed class AntWorker : Ant {
 		
 		// Orientation		
 		if(rigidbody2D.velocity.magnitude > 0) {
-			Vector3 referenceForward = new Vector3(-1,0,0);			
-			float angle = Vector3.Angle(referenceForward, direction);			
-			float sign = Mathf.Sign(Vector3.Dot(new Vector3(0,1,0),direction));			
-			transform.rotation = Quaternion.Euler(new Vector3(0,0,angle * -sign));
+			Vector3 referenceForward = new Vector3 (0, 1, 0);			
+			float angle = Vector3.Angle (referenceForward, direction);	
+			float sign = Mathf.Sign (Vector3.Dot (new Vector3 (1, 0, 0), direction));			
+			transform.rotation = Quaternion.Euler (new Vector3 (0, 0, angle * -sign));
 		}
 		
 		// Animation
