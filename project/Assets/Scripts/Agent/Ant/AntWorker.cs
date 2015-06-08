@@ -9,7 +9,6 @@ public sealed class AntWorker : Ant {
 	
 	private bool carryingFood = false;
 	private bool isHome = false;
-	private bool isInCollision = false;
 	
 	protected override void initialisation() {
 		this.animation = this.gameObject.GetComponent<Animator>();
@@ -116,7 +115,8 @@ public sealed class AntWorker : Ant {
 							actions.Add(new Action("dropFood", null));
 						}					
 						else {
-							actions.Add(new Action("seek", warehouse));
+							//actions.Add(new Action("seek", warehouse));
+							actions.Add(new Action("wandering", null));
 						}
 					}
 					else {				

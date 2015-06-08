@@ -30,7 +30,7 @@ public abstract class Ant : Insect {
 	}*/
 
 	public bool isEnemy(GameObject enemy){
-		if (enemy.tag == "Spider" || enemy.tag == "Termite")
+		if (enemy.tag == "Termite" || enemy.tag == "SpiderDigger" || enemy.tag == "SpiderWanderer")
 				return true;
 		else
 				return false;

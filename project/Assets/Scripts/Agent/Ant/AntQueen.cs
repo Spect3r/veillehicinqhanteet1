@@ -4,11 +4,11 @@ using System.Collections.Generic;
 
 public class AntQueen : Ant {
 
-	/*private int bornTime = 10;
+	private int bornTime = 100;
 	private int timer = 0;
 	public GameObject cocoon;
 
-	// Use this for initialization
+	/*// Use this for initialization
 	void Start () {
 		InvokeRepeating("born",5,bornTime);
 	}
@@ -45,13 +45,42 @@ public class AntQueen : Ant {
 	
 	protected override List<Action> makeDecision(Collider2D[] perceptions){
 		List<Action> actions = new List<Action>();
+
+
+			if(timer<=bornTime)
+			{
+				timer+=1;
+			}else{
+				actions.Add(new Action("born", null));
+				timer = 0;
+			}
 		return actions;
 	}
 	
 	protected override Vector2 applyAction(List<Action> actions) {
-		return new Vector2();
+		Vector2 direction = new Vector2 (); // = new Vector2 (1f,1f);
+		
+		foreach(Action action in actions)
+		{
+			switch(action.getBehaviour())
+			{	
+			case "seek" :
+				direction += this.seekBehaviour.run(this.gameObject, action.getTarget());
+				break;
+			case "born" :
+				this.born();
+				break;
+			}
+		}
+		return direction;
 	}
 	protected override void move(Vector2 direction) {
 		
+	}
+
+
+	private void born()
+	{
+		Instantiate (cocoon, this.transform.position + new Vector3(3,0,0), Quaternion.identity);
 	}
 }

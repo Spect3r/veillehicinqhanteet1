@@ -5,15 +5,11 @@ using System.Collections.Generic;
 public abstract class Spider : Insect {
 
 	public bool isEnemy(GameObject enemy){
-		if (enemy.tag == "Spider" || enemy.tag == "Termite")
+		if (enemy.tag == "AntWorker" || enemy.tag == "Termite" || enemy.tag == "AntSoldier")
 			return true;
 		else
 			return false;
 	}
-
-	/*void attack(Insect target){
-		target.life -= this.strength;
-	}*/
 
 
 }

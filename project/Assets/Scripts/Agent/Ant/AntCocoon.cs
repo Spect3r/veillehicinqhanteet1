@@ -4,11 +4,14 @@ using System.Collections.Generic;
 
 public class AntCocoon : Ant {
 
-	/*public GameObject worker;
+	public GameObject worker;
 	public GameObject soldier;
-	public GameObject nurse;
+	//public GameObject nurse;
 
-	// Use this for initialization
+	private int timer = 0;
+	private int bornTime = 100;
+
+	/*// Use this for initialization
 	void Start () {
 		Invoke ("born", 10);
 	
@@ -18,7 +21,7 @@ public class AntCocoon : Ant {
 	void Update () {
 	
 	}
-
+	*/
 	void born(){
 		int number = Random.Range (0, 2);
 		switch (number) {
@@ -32,13 +35,13 @@ public class AntCocoon : Ant {
 			Instantiate (soldier, this.transform.position, this.transform.rotation);
 			Destroy(gameObject);
 			break;
-		case 2:
+		/*case 2:
 			Debug.Log ("A nurse is born");
 			Instantiate (nurse, this.transform.position, this.transform.rotation);
 			Destroy(gameObject);
-			break;
+			break;*/
 		}
-	}*/
+	}
 	
 	protected override Collider2D[] getPerception(){
 		return Physics2D.OverlapCircleAll(this.transform.position, 3f);
@@ -46,11 +49,34 @@ public class AntCocoon : Ant {
 	
 	protected override List<Action> makeDecision(Collider2D[] perceptions){
 		List<Action> actions = new List<Action>();
+
+		if(timer<=bornTime)
+		{
+			timer+=1;
+			actions.Add(new Action("wandering", null));
+		}else{
+			actions.Add(new Action("born", null));
+			timer = 0;
+		}
 		return actions;
 	}
 	
 	protected override Vector2 applyAction(List<Action> actions) {
-		return new Vector2();
+		Vector2 direction = new Vector2 (); // = new Vector2 (1f,1f);
+		
+		foreach(Action action in actions)
+		{
+			switch(action.getBehaviour())
+			{	
+			case "wandering" :
+				direction += this.wanderingBehaviour.run(this.gameObject);
+				break;
+			case "born" :
+				this.born();
+				break;
+			}
+		}
+		return direction;
 	}
 	protected override void move(Vector2 direction) {
 		
