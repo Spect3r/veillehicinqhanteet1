@@ -20,7 +20,10 @@ TagManager:
   - SpiderDigger
   - SpiderWanderer
   - AntHome
-  - Cocoon
+  - TermiteHome
+  - TermiteHomeIn
+  - TermiteHomeOut
+  - TermiteWarehouse
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX

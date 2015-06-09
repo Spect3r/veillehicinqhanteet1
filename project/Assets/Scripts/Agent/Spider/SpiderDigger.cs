@@ -135,7 +135,7 @@ public class SpiderDigger : Spider {
 		
 		// Animation
 		if(animation != null) {
-			if(rigidbody2D.velocity.magnitude > 0 || isDigging)
+			if( (rigidbody2D.velocity.magnitude > 0 || isDigging) && Simulator.running)
 				animation.SetBool("moving", true);
 			else
 				animation.SetBool("moving", false);

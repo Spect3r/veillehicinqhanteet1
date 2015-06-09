@@ -14,26 +14,30 @@ public abstract class AbstractAgent : MonoBehaviour {
 	protected virtual void initialisation() {}
 
 	void Update () {
-		/* Perceptions and decisions */
-		if(Simulator.state == true) {
-			//Debug.Log(name + " - Emit Influence !");
-			
-			// Perception
-			perceptions = getPerception();
-			// Decision making
-			actions = makeDecision(perceptions);
-			
+		if(Simulator.running) {
+			/* Perceptions and decisions */
+			if(Simulator.state == true) {
+				//Debug.Log(name + " - Emit Influence !");
+				
+				// Perception
+				perceptions = getPerception();
+				// Decision making
+				actions = makeDecision(perceptions);
+				
+			}
+			/* Apply actions */
+			else {
+				//Debug.Log(name + " - Apply Influence !");
+				
+				// Apply behavior foreach actions
+				Vector2 direction = applyAction(actions);
+				
+				// Move agent
+				move(direction);
+			}
 		}
-		/* Apply actions */
-		else {
-			//Debug.Log(name + " - Apply Influence !");
-			
-			// Apply behavior foreach actions
-			Vector2 direction = applyAction(actions);
-			
-			// Move agent
-			move(direction);
-		}
+		else
+			move(Vector2.zero);
 	}
 	
 	protected abstract Collider2D[] getPerception();

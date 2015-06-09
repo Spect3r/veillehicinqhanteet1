@@ -25,12 +25,14 @@ public class MainMenu : MonoBehaviour {
 		if(Input.GetKeyDown(KeyCode.Escape) && !displayStat) {
 			
 			if(displayMainMenu) {
-				Pause();
+				if(paused)
+					UnPause();
 			
 				displayMainMenu=false;
 			}
 			else {
-				UnPause();
+				if(!paused)
+					Pause();
 				
 				displayMainMenu=true;
 			}
@@ -45,7 +47,7 @@ public class MainMenu : MonoBehaviour {
 	}
 	
 	void OnGUI() {
-		if(paused) {		
+		if(paused && !displayStat && !displayMainMenu) {		
 			GUI.Box (new Rect ( 0, 0, Screen.width, 30), "Paused");
 		}
 		
@@ -78,11 +80,11 @@ public class MainMenu : MonoBehaviour {
 	}
 	
 	void Pause() {
-		Time.timeScale = 0;
+		Simulator.running = false;
 		paused = true;
 	}
 	void UnPause() {
-		Time.timeScale = 1;
+		Simulator.running = true;
 		paused = false;
 	}
 }
