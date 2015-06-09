@@ -80,7 +80,8 @@ public class AntQueen : Ant {
 
 
 	private void born()
-	{
-		Instantiate (cocoon, this.transform.position + new Vector3(3,0,0), Quaternion.identity);
+	{	
+		Vector3 randPosition = Random.insideUnitCircle.normalized * 2;
+		Instantiate (cocoon, this.transform.position + randPosition, Quaternion.identity);
 	}
 }
