@@ -49,6 +49,7 @@ public abstract class Insect : AbstractAgent {
 		
 		if(life <= 0)
 		{
+			Statistics.removeInsect(this.tag);
 			Destroy(this.gameObject);
 		}
 	}
