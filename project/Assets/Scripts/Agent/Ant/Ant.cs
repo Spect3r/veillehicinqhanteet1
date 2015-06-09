@@ -13,6 +13,13 @@ public abstract class Ant : Insect {
 		homeOut = GameObject.FindGameObjectWithTag ("AntHomeOut");
 		warehouse = GameObject.FindGameObjectWithTag ("AntWarehouse");
 	}
+	
+	
+	
+	protected bool isHome = true;
+	/*public void setIsHome(bool b) {
+		isHome = b;
+	}*/
 
 	/*
 	A mettre dans un comportement ?
@@ -40,8 +47,7 @@ public abstract class Ant : Insect {
 		if (food.tag == "Food")
 			return true;
 		else
-			return false;
-		
+			return false;		
 	}
 
 	public bool isPheromone(GameObject pheromone){

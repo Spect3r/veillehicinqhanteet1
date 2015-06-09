@@ -48,20 +48,30 @@ public class AntSoldier : Ant {
 			actions.Add(new Action("avoidCollision", null));
 		}
 		else {
-			//if there is some enemies in the field of view
-			if(enemies.Count > 0) 
-			{
-				GameObject enemy = this.getClosestEntity(enemies);
-				if(Vector2.Distance(this.transform.position, enemy.transform.position) < 0.3f){
-					actions.Add(new Action("attack", enemy));
-				}					
-				else {
-					actions.Add(new Action("seek", enemy));
+			if(isHome == true) {
+				if(Vector2.Distance(this.transform.position, homeOut.transform.position) < 0.3f){
+					actions.Add(new Action("teleportationOut", null));
+				}
+				else{
+					actions.Add(new Action("seek", homeOut));
 				}
 			}
-			else
-			{
-				actions.Add(new Action("wandering", null));
+			else {
+				//if there is some enemies in the field of view
+				if(enemies.Count > 0) 
+				{
+					GameObject enemy = this.getClosestEntity(enemies);
+					if(Vector2.Distance(this.transform.position, enemy.transform.position) < 0.3f){
+						actions.Add(new Action("attack", enemy));
+					}					
+					else {
+						actions.Add(new Action("seek", enemy));
+					}
+				}
+				else
+				{
+					actions.Add(new Action("wandering", null));
+				}
 			}
 		}
 		return actions;
@@ -92,6 +102,18 @@ public class AntSoldier : Ant {
 			case "seek" :
 				direction += this.seekBehaviour.run(this.gameObject, action.getTarget());
 				break;
+			}
+			
+			if(action.getBehaviour() == "teleportationIn")
+			{
+				this.transform.position = homeOut.transform.position;
+				this.isHome = true;
+			}
+			if(action.getBehaviour() == "teleportationOut")
+			{
+				this.transform.position = homeIn.transform.position;
+				this.transform.rotation = Quaternion.AngleAxis(Random.Range(-180f,180f), new Vector3(0f,0f,1f));
+				this.isHome = false;
 			}
 			
 			if(action.getBehaviour() == "avoidCollision")

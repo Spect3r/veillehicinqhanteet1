@@ -8,7 +8,7 @@ public sealed class AntWorker : Ant {
 	public GameObject foodPheromone;*/
 	
 	private bool carryingFood = false;
-	private bool isHome = false;
+	
 	
 	protected override void initialisation() {
 		this.animation = this.gameObject.GetComponent<Animator>();
