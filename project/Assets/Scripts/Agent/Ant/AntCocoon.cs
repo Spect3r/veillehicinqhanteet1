@@ -19,15 +19,15 @@ public class AntCocoon : Ant {
 		int number = Random.Range (0, 2);
 		switch (number) {
 		case 0:
-			Debug.Log ("A worker is born");
-			/*GameObject temp = */
-			Instantiate (worker.gameObject, this.transform.position, this.transform.rotation);
-			//temp.GetComponent<AntWorker>().setIsHome(true);
+			//Debug.Log ("A worker is born");
+			Instantiate (worker.gameObject, this.transform.position, this.transform.rotation);			
+			Statistics.addInsect("AntWorker");
 			Destroy(gameObject);
 			break;
 		case 1:
-			Debug.Log ("A soldier is born");
-			Instantiate (soldier, this.transform.position, this.transform.rotation);
+			//Debug.Log ("A soldier is born");
+			Instantiate (soldier, this.transform.position, this.transform.rotation);			
+			Statistics.addInsect("AntSoldier");
 			Destroy(gameObject);
 			break;
 		/*case 2:

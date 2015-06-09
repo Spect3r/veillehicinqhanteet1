@@ -1,25 +1,18 @@
 ﻿using UnityEngine;
-using UnityEngine;
 using System.Collections;
 
 public class RTSLikeCamera : MonoBehaviour {
-
-	//public float distance = 5.0f;
-
-	GameObject ground;
 
 	float distance = 60;
 	float sensitivityDistance = 50;
 	float damping = 5;
 	float minFOV = 3;
-	float maxFOV = 30;
+	float maxFOV = 55;
 	
 	// Use this for initialization
 	void Start () {
 		Screen.showCursor = true;
-		distance = camera.fieldOfView;
-		ground = GameObject.FindGameObjectWithTag ("Ground");
-		
+		distance = camera.fieldOfView;		
 	}
 	
 	// Update is called once per frame
@@ -55,7 +48,6 @@ public class RTSLikeCamera : MonoBehaviour {
 
 		distance -= Input.GetAxis("Mouse ScrollWheel") * sensitivityDistance;
 		distance = Mathf.Clamp(distance, minFOV, maxFOV);
-		//this.camera.fieldOfView = Mathf.Lerp(camera.fieldOfView, distance, Time.deltaTime * damping);
 		this.camera.orthographicSize = Mathf.Lerp(camera.orthographicSize, distance, Time.deltaTime * damping);
 	}
 }

@@ -13,9 +13,12 @@ public class EntitySpawn : MonoBehaviour {
 	
 	void Start () {
 		
+		GameObject ground = GameObject.FindGameObjectWithTag("Ground");
+		Vector2 groundPosition = new Vector2(ground.transform.position.x, ground.transform.position.y);
+		
 		/** Food **/
-		for (int i = 0; i<20; i++) {
-			Vector2 position = new Vector2(Random.Range(-25.0F, 25.0F), Random.Range(-25.0F, 25.0F));		
+		for (int i = 0; i<50; i++) {
+			Vector2 position = new Vector2(Random.Range(-50.0F, 50.0F), Random.Range(-50.0F, 50.0F)) + groundPosition;		
 			Instantiate (food, position, Quaternion.identity);			
 		}
 		
@@ -56,9 +59,9 @@ public class EntitySpawn : MonoBehaviour {
 		}*/
 		
 		/** Spider **/		
-		for (int i = 0; i<5; i++) {
+		for (int i = 0; i<25; i++) {
 			// Random position
-			Vector2 position = new Vector2(Random.Range(-25.0F, 25.0F), Random.Range(-25.0F, 25.0F));
+			Vector2 position = new Vector2(Random.Range(-50.0F, 50.0F), Random.Range(-50.0F, 50.0F)) + groundPosition;
 			
 			// Random orientation
 			Quaternion orientation = Quaternion.AngleAxis(Random.Range(-180f,180f), Vector3.forward);
@@ -67,9 +70,9 @@ public class EntitySpawn : MonoBehaviour {
 			
 			Statistics.addInsect("SpiderWanderer");			
 		}
-		for (int i = 0; i<5; i++) {
+		for (int i = 0; i<15; i++) {
 			// Random position
-			Vector2 position = new Vector2(Random.Range(-22.0F, 22.0F), Random.Range(-22.0F, 22.0F));
+			Vector2 position = new Vector2(Random.Range(-50.0F, 50.0F), Random.Range(-50.0F, 50.0F)) + groundPosition;
 			
 			// Random orientation
 			Quaternion orientation = Quaternion.AngleAxis(Random.Range(-180f,180f), Vector3.forward);

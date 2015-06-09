@@ -3,11 +3,11 @@ using System.Collections;
 
 public class Food : MonoBehaviour {
 
-	public int foodAmount = 10;
+	public int foodAmount;
 
-	/*void Awake() {
+	void Awake() {
 		foodAmount = 10;
-	}*/
+	}
 	
 	public void takeFood() {
 		foodAmount--;
