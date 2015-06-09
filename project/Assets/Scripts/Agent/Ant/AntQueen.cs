@@ -81,6 +81,11 @@ public class AntQueen : Ant {
 
 	private void born()
 	{
-		Instantiate (cocoon, this.transform.position + new Vector3(3,0,0), Quaternion.identity);
+		if(warehouse.GetComponent<Warehouse>().getFoodQuantity() > 5)
+		{
+			Instantiate (cocoon, this.transform.position + new Vector3(3,0,0), Quaternion.identity);
+			warehouse.GetComponent<Warehouse>().setFoodQuantity(-5);
+		}
+			
 	}
 }

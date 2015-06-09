@@ -9,6 +9,9 @@ public abstract class Insect : AbstractAgent {
 	public int life;
 	public int strength;
 	
+	// State
+	protected bool isInCollision = false;
+	
 	// Behaviour
 	protected SeekBehaviour seekBehaviour = new SeekBehaviour();
 	protected FleeBehaviour fleeBehaviour = new FleeBehaviour();
@@ -24,10 +27,10 @@ public abstract class Insect : AbstractAgent {
 		else
 			return false;
 	}
-
+	
 	protected GameObject getClosestEntity(List<GameObject> entities) {
 		GameObject closestEntity = null;
-
+		
 		foreach (GameObject entity in entities) {
 			if (closestEntity != null) {
 				if (Vector2.Distance (closestEntity.transform.position, this.gameObject.transform.position) > Vector2.Distance (entity.transform.position, this.gameObject.transform.position)) {
@@ -39,13 +42,14 @@ public abstract class Insect : AbstractAgent {
 		}
 		return closestEntity;
 	}
-
+	
 	public void takeDamage(int damage)
 	{
 		this.life -= damage;
-
+		
 		if(life <= 0)
 		{
+			Statistics.removeInsect(this.tag);
 			Destroy(this.gameObject);
 		}
 	}

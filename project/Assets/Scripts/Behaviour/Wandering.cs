@@ -34,11 +34,11 @@ public class Wandering {
 
 	public Vector2 run(GameObject source)
 	{
-		Vector2 referenceForward = new Vector2(-1,0);	
+		Vector2 referenceForward = new Vector2(0,1);	
 		Vector2 directionFromRotation = source.transform.rotation * referenceForward;
 		
 		Vector2 newDirection = Quaternion.AngleAxis(Random.Range(0f,10f)-Random.Range(0f,10f), source.transform.forward) * directionFromRotation; 
-		
+				
 		return newDirection;
 	}
 

@@ -8,7 +8,7 @@ public sealed class AntWorker : Ant {
 	public GameObject foodPheromone;*/
 	
 	private bool carryingFood = false;
-	private bool isHome = false;
+	
 	
 	protected override void initialisation() {
 		this.animation = this.gameObject.GetComponent<Animator>();
@@ -53,7 +53,18 @@ public sealed class AntWorker : Ant {
 	
 
 	protected override Collider2D[] getPerception() {
-		return Physics2D.OverlapCircleAll(this.transform.position, 4f);
+		List<Collider2D> perceived = new List<Collider2D>();
+			
+		// Visual Perception
+		perceived.AddRange(Physics2D.OverlapCircleAll(this.transform.position, 4f, 1 << 0));
+				
+		// Collision Perception
+		perceived.AddRange(Physics2D.OverlapCircleAll(this.transform.position, 0.5f, 1 << 8));
+		
+		// Pheromone Perception
+		perceived.AddRange(Physics2D.OverlapCircleAll(this.transform.position, 40f, 1 << 9));		
+		
+		return perceived.ToArray();
 	}
 
 
@@ -65,6 +76,8 @@ public sealed class AntWorker : Ant {
 		List<GameObject> food = new List<GameObject>();
 		//List<GameObject> pheromone = new List<GameObject>();
 		
+		List<Collider2D> border = new List<Collider2D>();
+		
 		foreach(Collider2D collider in perceptions){
 			if(isEnemy(collider.gameObject)){
 				ennemy.Add(collider.gameObject);
@@ -75,86 +88,95 @@ public sealed class AntWorker : Ant {
 			/*if(isPheromone(collider.gameObject)){
 				ennemy.Add(collider.gameObject);
 			}*/
+			
+			if(collider.gameObject.tag == "Border") {
+				border.Add(collider);
+				//Debug.Log("WARNING BORDER IS NEAR !!! : ");
+				//Debug.Log(collider.transform.position );
+			}
 		}
 		
-		/*if(true) {
-			actions.Add(new Action("seek", homeIn));
-		}*/
-		if(ennemy.Count > 0) 
-		{
-			foreach(GameObject target in ennemy)
-				actions.Add(new Action("flee", target));
-			
-			//actions.Add(new Action("putPheromone", warningPheromone));
+		if(border.Count > 0) {
+			actions.Add(new Action("avoidCollision", null));
 		}
-		else
-		{
-			if(carryingFood == true){
-				if(isHome == true) {				
-					if(Vector2.Distance(this.transform.position, warehouse.transform.position) < 0.3f){
-						actions.Add(new Action("dropFood", null));
-					}					
-					else {
-						actions.Add(new Action("seek", warehouse));
-					}
-				}
-				else {				
-					if(Vector2.Distance(this.transform.position, homeIn.transform.position) < 0.3f){
-						actions.Add(new Action("teleportationIn", null));
-					}
-					else{
-						actions.Add(new Action("seek", homeIn));
-					}
-				}
+		else {
+			if(ennemy.Count > 0) 
+			{
+				foreach(GameObject target in ennemy)
+					actions.Add(new Action("flee", target));
+				
+				//actions.Add(new Action("putPheromone", warningPheromone));
 			}
-			else{
-				if(isHome == true) {
-					if(Vector2.Distance(this.transform.position, homeOut.transform.position) < 0.3f){
-						actions.Add(new Action("teleportationOut", null));
+			else
+			{
+				if(carryingFood == true){
+					if(isHome == true) {				
+						if(Vector2.Distance(this.transform.position, warehouse.transform.position) < 0.3f){
+							actions.Add(new Action("dropFood", null));
+						}					
+						else {
+							actions.Add(new Action("seek", warehouse));
+							//actions.Add(new Action("wandering", null));
+						}
 					}
-					else{
-						actions.Add(new Action("seek", homeOut));
+					else {				
+						if(Vector2.Distance(this.transform.position, homeIn.transform.position) < 0.3f){
+							actions.Add(new Action("teleportationIn", null));
+						}
+						else{
+							actions.Add(new Action("seek", homeIn));
+						}
 					}
 				}
-				else {
-					if(food.Count > 0){
-						GameObject nearestFood = null;
-						
-						foreach(GameObject target in food) {
-							if(nearestFood != null) {
-								if(Vector2.Distance(nearestFood.transform.position, this.gameObject.transform.position) > Vector2.Distance(target.transform.position, this.gameObject.transform.position)) {
+				else{
+					if(isHome == true) {
+						if(Vector2.Distance(this.transform.position, homeOut.transform.position) < 0.3f){
+							actions.Add(new Action("teleportationOut", null));
+						}
+						else{
+							actions.Add(new Action("seek", homeOut));
+						}
+					}
+					else {
+						if(food.Count > 0){
+							GameObject nearestFood = null;
+							
+							foreach(GameObject target in food) {
+								if(nearestFood != null) {
+									if(Vector2.Distance(nearestFood.transform.position, this.gameObject.transform.position) > Vector2.Distance(target.transform.position, this.gameObject.transform.position)) {
+										nearestFood = target;
+									}
+								}
+								else {
 									nearestFood = target;
 								}
 							}
-							else {
-								nearestFood = target;
-							}
-						}
-						
-						if(Vector2.Distance(nearestFood.transform.position, this.transform.position) < 0.3f){
-							actions.Add(new Action("takeFood", nearestFood));
-							//actions.Add(new Action("putPheromone", foodPheromone));
-						}
-						else{
-								
-							actions.Add(new Action("seek", nearestFood));
-						}
-					}
-					else{
-						
-						actions.Add(new Action("wandering", null));
-					
-						/*if(isPheromone(collider.gameObject)){
-							if(this.transform.position == collider.transform.position){
-								actions.Add(new Action("deletePheromone", collider.gameObject));
+							
+							if(Vector2.Distance(nearestFood.transform.position, this.transform.position) < 0.3f){
+								actions.Add(new Action("takeFood", nearestFood));
+								//actions.Add(new Action("putPheromone", foodPheromone));
 							}
 							else{
-								//actions.Add(new Action("seek", foodPheromone));
+									
+								actions.Add(new Action("seek", nearestFood));
 							}
 						}
 						else{
-							//actions.Add(new Action("wandering", null));
-						}*/
+							
+							actions.Add(new Action("wandering", null));
+						
+							/*if(isPheromone(collider.gameObject)){
+								if(this.transform.position == collider.transform.position){
+									actions.Add(new Action("deletePheromone", collider.gameObject));
+								}
+								else{
+									//actions.Add(new Action("seek", foodPheromone));
+								}
+							}
+							else{
+								//actions.Add(new Action("wandering", null));
+							}*/
+						}
 					}
 				}
 			}
@@ -165,29 +187,22 @@ public sealed class AntWorker : Ant {
 
 	protected override Vector2 applyAction(List<Action> actions)
 	{
-		Vector2 direction = new Vector2 (); // = new Vector2 (1f,1f);
-		
-		/*bool seekDone = false;
-		bool fleeDone = false;
-		bool wanderingDone = false;*/
+		Vector2 direction = new Vector2 ();
 		
 		foreach(Action action in actions)
-		{
+		{			
 			// peut mettre un switch à la place
-			if(action.getBehaviour() == "seek") // && !seekDone)
+			if(action.getBehaviour() == "seek")
 			{
 				direction += this.seekBehaviour.run(this.gameObject, action.getTarget());
-				//seekDone = true;
 			}
-			if(action.getBehaviour() == "flee") // && !fleeDone)
+			if(action.getBehaviour() == "flee")
 			{
 				direction += this.fleeBehaviour.run(this.gameObject, action.getTarget());
-				//fleeDone = true;
 			}
-			if(action.getBehaviour() == "wandering") // && !wanderingDone)
+			if(action.getBehaviour() == "wandering")
 			{
 				direction += this.wanderingBehaviour.run(this.gameObject);
-				//wanderingDone = true;
 			}
 			if(action.getBehaviour() == "takeFood")
 			{
@@ -202,6 +217,7 @@ public sealed class AntWorker : Ant {
 			if(action.getBehaviour() == "dropFood")
 			{
 				carryingFood = false;
+				warehouse.GetComponent<Warehouse>().addFood();
 			}
 			if(action.getBehaviour() == "teleportationIn")
 			{
@@ -222,6 +238,22 @@ public sealed class AntWorker : Ant {
 			{
 				this.deletePheromone();
 			}*/
+			
+			if(action.getBehaviour() == "avoidCollision")
+			{
+				Vector2 referenceForward = new Vector2(0,1);
+				Vector2 directionFromRotation = this.transform.rotation * referenceForward;
+				
+				if(!isInCollision)
+					direction += (Vector2) ( Quaternion.AngleAxis(180, this.transform.forward) * directionFromRotation );
+				else
+					direction += directionFromRotation;
+					
+				isInCollision = true;
+			}
+			else {
+				isInCollision = false;
+			}	
 		}
 		return direction;
 	}
@@ -233,10 +265,10 @@ public sealed class AntWorker : Ant {
 		
 		// Orientation		
 		if(rigidbody2D.velocity.magnitude > 0) {
-			Vector3 referenceForward = new Vector3(-1,0,0);			
-			float angle = Vector3.Angle(referenceForward, direction);			
-			float sign = Mathf.Sign(Vector3.Dot(new Vector3(0,1,0),direction));			
-			transform.rotation = Quaternion.Euler(new Vector3(0,0,angle * -sign));
+			Vector3 referenceForward = new Vector3 (0, 1, 0);			
+			float angle = Vector3.Angle (referenceForward, direction);	
+			float sign = Mathf.Sign (Vector3.Dot (new Vector3 (1, 0, 0), direction));			
+			transform.rotation = Quaternion.Euler (new Vector3 (0, 0, angle * -sign));
 		}
 		
 		// Animation

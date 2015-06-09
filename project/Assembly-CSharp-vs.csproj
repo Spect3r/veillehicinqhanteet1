@@ -58,6 +58,11 @@
      <Compile Include="Assets\Scripts\Agent\Spider\Spider.cs" />
      <Compile Include="Assets\Scripts\Agent\Spider\SpiderDigger.cs" />
      <Compile Include="Assets\Scripts\Agent\Spider\SpiderWanderer.cs" />
+     <Compile Include="Assets\Scripts\Agent\Termite\Termite.cs" />
+     <Compile Include="Assets\Scripts\Agent\Termite\TermiteCocoon.cs" />
+     <Compile Include="Assets\Scripts\Agent\Termite\TermiteQueen.cs" />
+     <Compile Include="Assets\Scripts\Agent\Termite\TermiteSoldier.cs" />
+     <Compile Include="Assets\Scripts\Agent\Termite\TermiteWorker.cs" />
      <Compile Include="Assets\Scripts\Behaviour\FleeBehaviour.cs" />
      <Compile Include="Assets\Scripts\Behaviour\SeekBehaviour.cs" />
      <Compile Include="Assets\Scripts\Behaviour\Wandering.cs" />
@@ -65,8 +70,12 @@
      <Compile Include="Assets\Scripts\Camera\RTSLikeCamera.cs" />
      <Compile Include="Assets\Scripts\Environment\Food.cs" />
      <Compile Include="Assets\Scripts\Environment\Pheromone.cs" />
+     <Compile Include="Assets\Scripts\Environment\Warehouse.cs" />
+     <Compile Include="Assets\Scripts\Interface\MainMenu.cs" />
      <Compile Include="Assets\Scripts\Simulation\EntitySpawn.cs" />
      <Compile Include="Assets\Scripts\Simulation\Simulator.cs" />
+     <Compile Include="Assets\Scripts\Simulation\Statistics.cs" />
+     <Compile Include="Assets\Statistics.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
  </Reference>

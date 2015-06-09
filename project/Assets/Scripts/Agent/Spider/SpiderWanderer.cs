@@ -3,103 +3,63 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class SpiderWanderer : Spider {
-
-	/*Collider2D getPerception(){
-		Collider2D[] perceptions = Physics2D.OverlapCircleAll(transform.position, 3f);
-	}
 	
-	List<Action> makeDecision(Collider2D[] perceptions){
-		List<Action> actions;
-		foreach(Collider2D collider in perceptions){
-			// if there is an enemy in field of view
-			if(isEnemy(collider))
-			{
-				//attack
-				actions.Add(new Action("attack", collider));
-			}
-			else
-			{
-				//if there is a gate in field of view
-				if(isGate(collider.gameObject))
-   			    {
-					if(collider.gameObject.transform.position - this.transform.position <= radius)
-						//enter in the colony
-						actions.Add(new Action("teleportation", collider));
-					else
-						//go to the gate
-						actions.Add(new Action("seek", collider));
-				}
-				else 
-				{
-					//else wandering
-					actions.Add(new Action("wandering", null));
-				}
-			}
-		}
-		
+	
+	protected override void initialisation () {	
+		this.animation = this.gameObject.GetComponent<Animator>();
 	}
-
-	Vector2 applyAction(List<Action> actions)
-	{
-		Vector2 direction = new Vector2 ();
-		foreach(Action action in actions)
-		{
-			if(action.getBehaviour() == "seek")
-			{
-				direction += SeekBehaviour.run(action.getTarget());
-			}
-			if(action.getBehaviour() == "flee")
-			{
-				direction += FleeBehaviour.run(action.getTarget());
-			}
-			if(action.getBehaviour() == "wandering")
-			{
-				direction += Wandering.run();
-			}
-			if(action.getBehaviour() == "teleportation")
-			{
-				this.transform.position = gateB.transform.position;
-			}
-			if(action.getBehaviour() == "putPheromone")
-			{
-				this.putPheromone();
-			}
-			if(action.getBehaviour() == "deletePheromone")
-			{
-				this.deletePheromone();
-			}
-		}
-		return direction;
-	}*/
 	
 	protected override Collider2D[] getPerception(){
-		return Physics2D.OverlapCircleAll(this.transform.position, 3f);
+		List<Collider2D> perceived = new List<Collider2D>();
+		
+		// Visual Perception
+		perceived.AddRange(Physics2D.OverlapCircleAll(this.transform.position, 4f, 1 << 0));
+		
+		// Collision Perception
+		perceived.AddRange(Physics2D.OverlapCircleAll(this.transform.position, 0.5f, 1 << 8));
+		
+		// Pheromone Perception
+		perceived.AddRange(Physics2D.OverlapCircleAll(this.transform.position, 40f, 1 << 9));		
+		
+		return perceived.ToArray();
 	}
 	
 	protected override List<Action> makeDecision(Collider2D[] perceptions){
 		List<Action> actions = new List<Action>();
-
+		
 		List<GameObject> enemies = new List<GameObject>();
-
-		foreach(Collider2D collider in perceptions){
-			if(isEnemy(collider.gameObject)){
-				enemies.Add(collider.gameObject);
+		
+		List<Collider2D> border = new List<Collider2D>();
+		
+		foreach (Collider2D collider in perceptions) {
+			if (isEnemy (collider.gameObject)) {
+				enemies.Add (collider.gameObject);
+			}
+			
+			if(collider.gameObject.tag == "Border") {
+				border.Add(collider);
 			}
 		}
-		//if there is some enemies in the field of view
-		if(enemies.Count > 0) 
-		{
-			GameObject enemy = this.getClosestEntity(enemies);
-			if(Vector2.Distance(this.transform.position, enemy.transform.position) < 0.3f){
-				actions.Add(new Action("attack", enemy));
-			}					
-			else {
-				actions.Add(new Action("seek", enemy));
-			}
+		
+		if(border.Count > 0) {
+			actions.Add(new Action("avoidCollision", null));
 		}
-		else
-		{
-			actions.Add(new Action("wandering", null));
+		else {
+			//if there is some enemies in the field of view
+			if(enemies.Count > 0) 
+			{
+				GameObject enemy = this.getClosestEntity(enemies);
+				if(Vector2.Distance(this.transform.position, enemy.transform.position) < 0.3f){
+					actions.Add(new Action("attack", enemy));
+				}					
+				else {
+					actions.Add(new Action("seek", enemy));
+				}
+			}
+			else
+			{
+				actions.Add(new Action("wandering", null));
+			}
 		}
 		return actions;
 	}
@@ -129,6 +89,23 @@ public class SpiderWanderer : Spider {
 				direction += this.seekBehaviour.run(this.gameObject, action.getTarget());
 				break;
 			}
+			
+			if(action.getBehaviour() == "avoidCollision")
+			{
+				
+				Vector2 referenceForward = new Vector2(0,1);	
+				Vector2 directionFromRotation = this.transform.rotation * referenceForward;
+				
+				if(!isInCollision)
+					direction += (Vector2) ( Quaternion.AngleAxis(180, this.transform.forward) * directionFromRotation );
+				else
+					direction += directionFromRotation;
+				
+				isInCollision = true;
+			}
+			else {
+				isInCollision = false;
+			}
 		}
 		return direction;
 	}
@@ -140,10 +117,18 @@ public class SpiderWanderer : Spider {
 		
 		// Orientation		
 		if (rigidbody2D.velocity.magnitude > 0) {
-				Vector3 referenceForward = new Vector3 (-1, 0, 0);			
-				float angle = Vector3.Angle (referenceForward, direction);			
-				float sign = Mathf.Sign (Vector3.Dot (new Vector3 (0, 1, 0), direction));			
-				transform.rotation = Quaternion.Euler (new Vector3 (0, 0, angle * -sign));
+			Vector3 referenceForward = new Vector3 (0, 1, 0);			
+			float angle = Vector3.Angle (referenceForward, direction);	
+			float sign = Mathf.Sign (Vector3.Dot (new Vector3 (1, 0, 0), direction));			
+			transform.rotation = Quaternion.Euler (new Vector3 (0, 0, angle * -sign));
+		}
+		
+		// Animation
+		if(animation != null) {
+			if(rigidbody2D.velocity.magnitude > 0)
+				animation.SetBool("moving", true);
+			else
+				animation.SetBool("moving", false);
 		}
 	}
 }

@@ -10,24 +10,19 @@ public class AntCocoon : Ant {
 
 	private int timer = 0;
 	private int bornTime = 100;
-
-	/*// Use this for initialization
-	void Start () {
-		Invoke ("born", 10);
 	
-	}
+	/*protected override void initialisation() {
+		worker.GetComponent<AntWorker>().setIsHome(true);
+	}*/
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-	*/
 	void born(){
 		int number = Random.Range (0, 2);
 		switch (number) {
 		case 0:
 			Debug.Log ("A worker is born");
-			Instantiate (worker, this.transform.position, this.transform.rotation);
+			/*GameObject temp = */
+			Instantiate (worker.gameObject, this.transform.position, this.transform.rotation);
+			//temp.GetComponent<AntWorker>().setIsHome(true);
 			Destroy(gameObject);
 			break;
 		case 1:

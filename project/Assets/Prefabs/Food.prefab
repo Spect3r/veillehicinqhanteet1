@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 470026}
   - 212: {fileID: 21270026}
   - 58: {fileID: 5803578}
-  - 114: {fileID: 11470026}
+  - 114: {fileID: 11415914}
   m_Layer: 0
   m_Name: Food
   m_TagString: Food
@@ -41,7 +41,7 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_Radius: .0900000036
   m_Center: {x: 0, y: 0}
---- !u!114 &11470026
+--- !u!114 &11415914
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}

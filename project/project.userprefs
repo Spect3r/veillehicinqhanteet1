@@ -1,9 +1,19 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Camera\RTSLikeCamera.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Agent\Termite\Termite.cs">
     <Files>
-      <File FileName="Assets\Scripts\Simulation\EntitySpawn.cs" Line="52" Column="38" />
-      <File FileName="Assets\Scripts\Camera\RTSLikeCamera.cs" Line="30" Column="26" />
+      <File FileName="Assets\Scripts\Environment\Warehouse.cs" Line="30" Column="22" />
+      <File FileName="Assets\Scripts\Agent\Termite\Termite.cs" Line="13" Column="49" />
+      <File FileName="Assets\Scripts\Simulation\EntitySpawn.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Agent\Ant\AntSoldier.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Agent\Ant\AntWorker.cs" Line="220" Column="5" />
+      <File FileName="Assets\Scripts\Agent\Ant\Ant.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Agent\Termite\TermiteWorker.cs" Line="219" Column="26" />
+      <File FileName="Assets\Scripts\Agent\Termite\TermiteSoldier.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Agent\Termite\TermiteQueen.cs" Line="90" Column="3" />
+      <File FileName="Assets\Scripts\Agent\Ant\AntQueen.cs" Line="82" Column="2" />
+      <File FileName="Assets\Scripts\Agent\Ant\AntCocoon.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Agent\Termite\TermiteCocoon.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

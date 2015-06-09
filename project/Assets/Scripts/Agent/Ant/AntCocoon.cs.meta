@@ -2,7 +2,9 @@ fileFormatVersion: 2
 guid: 09e09ebe8b4acfc4ab5fda541e9cb153
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - worker: {fileID: 113388, guid: d899012fa68e67048a8bfbcd2201112e, type: 2}
+  - soldier: {fileID: 151882, guid: 4b07e527c6e6855468cae1605f7fc4c6, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
