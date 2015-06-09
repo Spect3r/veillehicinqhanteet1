@@ -79,6 +79,10 @@ public class AntSoldier : Ant {
 				{
 					action.getTarget().GetComponent<SpiderWanderer>().takeDamage(this.strength);
 				}
+				else if(action.getTarget().tag == "SpiderDigger")
+				{
+					action.getTarget().GetComponent<SpiderDigger>().takeDamage(this.strength);
+				}
 				else
 					Debug.Log("Je ne reconnais pas cet ennemi");
 				break;

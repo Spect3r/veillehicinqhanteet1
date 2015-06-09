@@ -47,7 +47,7 @@ public class EntitySpawn : MonoBehaviour {
 			
 			Instantiate (antSoldier, position, orientation);			
 		}
-		for (int i = 0; i<1; i++) {
+		/*for (int i = 0; i<1; i++) {
 			// Random position
 			Vector2 position = new Vector2(414.0f,18.0f);
 			
@@ -55,10 +55,10 @@ public class EntitySpawn : MonoBehaviour {
 			Quaternion orientation = Quaternion.AngleAxis(Random.Range(-180f,180f), Vector3.forward);
 			
 			Instantiate (antQueen, position, orientation);			
-		}
+		}*/
 		for (int i = 0; i<5; i++) {
 			// Random position
-			Vector2 position = new Vector2(Random.Range(-25.0F, 25.0F), Random.Range(-25.0F, 25.0F));
+			Vector2 position = new Vector2(Random.Range(-22.0F, 22.0F), Random.Range(-22.0F, 22.0F));
 			
 			// Random orientation
 			Quaternion orientation = Quaternion.AngleAxis(Random.Range(-180f,180f), Vector3.forward);

@@ -144,7 +144,7 @@ public class SpiderDigger : Spider {
 	
 	private void constructHole()
 	{
-		if(hole.transform.localScale.x >= 15.0f && hole.transform.localScale.y >= 15.0f)
+		if(hole.transform.localScale.x >= 6f && hole.transform.localScale.y >= 6f)
 		{
 			isDigging = false;
 		}
