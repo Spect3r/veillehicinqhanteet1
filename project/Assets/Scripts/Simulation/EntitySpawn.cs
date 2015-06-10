@@ -3,13 +3,17 @@ using System.Collections;
 
 public class EntitySpawn : MonoBehaviour {
 	
-	public GameObject queen;
 	public GameObject food;
-	public GameObject worker;
+	
+	public GameObject antWorker;
 	public GameObject antSoldier;
-	public GameObject antQueen;
+	
+	public GameObject termiteWorker;
+	public GameObject termiteSoldier;
+	
 	public GameObject spiderWanderer;
 	public GameObject spiderDigger;
+	
 	
 	void Start () {
 		
@@ -33,7 +37,7 @@ public class EntitySpawn : MonoBehaviour {
 			// Random orientation
 			Quaternion orientation = Quaternion.AngleAxis(Random.Range(-180f,180f), Vector3.forward);
 					
-			Instantiate (worker, position, orientation);
+			Instantiate (antWorker, position, orientation);
 			
 			Statistics.addInsect("AntWorker");
 		}
@@ -57,6 +61,33 @@ public class EntitySpawn : MonoBehaviour {
 			
 			Instantiate (antQueen, position, orientation);			
 		}*/
+		
+		/** Termite **/
+		GameObject termiteHome = GameObject.FindGameObjectWithTag("TermiteHome");
+		Vector2 termiteHomePosition = new Vector2(termiteHome.transform.position.x, termiteHome.transform.position.y);
+		
+		for (int i = 0; i<20; i++) {
+			// Random position
+			Vector2 position = Random.insideUnitCircle * 10f + termiteHomePosition;
+			
+			// Random orientation
+			Quaternion orientation = Quaternion.AngleAxis(Random.Range(-180f,180f), Vector3.forward);
+			
+			Instantiate (termiteWorker, position, orientation);
+			
+			Statistics.addInsect("TermiteWorker");
+		}
+		for (int i = 0; i<20; i++) {
+			// Random position
+			Vector2 position = Random.insideUnitCircle * 10f + termiteHomePosition;
+			
+			// Random orientation
+			Quaternion orientation = Quaternion.AngleAxis(Random.Range(-180f,180f), Vector3.forward);
+			
+			Instantiate (termiteSoldier, position, orientation);
+			
+			Statistics.addInsect("TermiteSoldier");
+		}
 		
 		/** Spider **/		
 		for (int i = 0; i<25; i++) {

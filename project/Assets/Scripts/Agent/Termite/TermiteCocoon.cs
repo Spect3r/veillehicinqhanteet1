@@ -2,26 +2,25 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class AntCocoon : Ant {
-
+public class TermiteCocoon : Termite {
+	
 	public GameObject worker;
 	public GameObject soldier;
-
+	
 	private int timer = 0;
 	private int bornTime = 100;
+	
 	
 	void born(){
 		int number = Random.Range (0, 2);
 		switch (number) {
 		case 0:
-			//Debug.Log ("A worker is born");
-			Instantiate (worker.gameObject, this.transform.position, this.transform.rotation);	
+			Instantiate (worker.gameObject, this.transform.position, this.transform.rotation);			
 			Statistics.addInsect(worker.tag);
 			Destroy(gameObject);
 			break;
 		case 1:
-			//Debug.Log ("A soldier is born");
-			Instantiate (soldier, this.transform.position, this.transform.rotation);	
+			Instantiate (soldier, this.transform.position, this.transform.rotation);			
 			Statistics.addInsect(soldier.tag);
 			Destroy(gameObject);
 			break;
@@ -34,7 +33,7 @@ public class AntCocoon : Ant {
 	
 	protected override List<Action> makeDecision(Collider2D[] perceptions){
 		List<Action> actions = new List<Action>();
-
+		
 		if(timer<=bornTime)
 		{
 			timer+=1;

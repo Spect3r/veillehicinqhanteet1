@@ -2,8 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public sealed class AntWorker : Ant {
-
+public sealed class TermiteWorker : Termite {
+	
 	/*public GameObject warningPheromone;
 	public GameObject foodPheromone;*/
 	
@@ -14,24 +14,24 @@ public sealed class AntWorker : Ant {
 		this.animator = this.gameObject.GetComponent<Animator>();
 	}
 	
-
+	
 	protected override Collider2D[] getPerception() {
 		List<Collider2D> perceived = new List<Collider2D>();
-			
+		
 		// Visual Perception
 		perceived.AddRange(Physics2D.OverlapCircleAll(this.transform.position, 4f, 1 << 0));
-				
+		
 		// Collision Perception
 		perceived.AddRange(Physics2D.OverlapCircleAll(this.transform.position, 0.5f, 1 << 8));
 		
 		// Pheromone Perception
-		//perceived.AddRange(Physics2D.OverlapCircleAll(this.transform.position, 40f, 1 << 9));		
+		perceived.AddRange(Physics2D.OverlapCircleAll(this.transform.position, 40f, 1 << 9));		
 		
 		return perceived.ToArray();
 	}
-
-
-
+	
+	
+	
 	protected override List<Action> makeDecision(Collider2D[] perceptions){
 		List<Action> actions = new List<Action>();
 		
@@ -54,6 +54,8 @@ public sealed class AntWorker : Ant {
 			
 			if(collider.gameObject.tag == "Border") {
 				border.Add(collider);
+				//Debug.Log("WARNING BORDER IS NEAR !!! : ");
+				//Debug.Log(collider.transform.position );
 			}
 		}
 		
@@ -77,6 +79,7 @@ public sealed class AntWorker : Ant {
 						}					
 						else {
 							actions.Add(new Action("seek", warehouse));
+							//actions.Add(new Action("wandering", null));
 						}
 					}
 					else {				
@@ -117,14 +120,14 @@ public sealed class AntWorker : Ant {
 								//actions.Add(new Action("putPheromone", foodPheromone));
 							}
 							else{
-									
+								
 								actions.Add(new Action("seek", nearestFood));
 							}
 						}
 						else{
 							
 							actions.Add(new Action("wandering", null));
-						
+							
 							/*if(isPheromone(collider.gameObject)){
 								if(this.transform.position == collider.transform.position){
 									actions.Add(new Action("deletePheromone", collider.gameObject));
@@ -144,7 +147,7 @@ public sealed class AntWorker : Ant {
 		
 		return actions;
 	}
-
+	
 	protected override Vector2 applyAction(List<Action> actions)
 	{
 		Vector2 direction = new Vector2 ();
@@ -208,7 +211,7 @@ public sealed class AntWorker : Ant {
 					direction += (Vector2) ( Quaternion.AngleAxis(180, this.transform.forward) * directionFromRotation );
 				else
 					direction += directionFromRotation;
-					
+				
 				isInCollision = true;
 			}
 			else {
@@ -217,7 +220,7 @@ public sealed class AntWorker : Ant {
 		}
 		return direction;
 	}
-
+	
 	protected override void move(Vector2 direction)
 	{
 		// Kinematic movement
@@ -239,8 +242,8 @@ public sealed class AntWorker : Ant {
 				this.animator.SetBool("moving", false);
 		}
 	}
-		
-
+	
+	
 }
 
 

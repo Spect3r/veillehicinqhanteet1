@@ -3,6 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class AntSoldier : Ant {
+
+	protected override void initialisation() {
+		this.animator = this.gameObject.GetComponent<Animator>();
+	}
 	
 	protected override Collider2D[] getPerception(){
 		List<Collider2D> perceived = new List<Collider2D>();
@@ -14,7 +18,7 @@ public class AntSoldier : Ant {
 		perceived.AddRange(Physics2D.OverlapCircleAll(this.transform.position, 0.5f, 1 << 8));
 		
 		// Pheromone Perception
-		perceived.AddRange(Physics2D.OverlapCircleAll(this.transform.position, 40f, 1 << 9));		
+		//perceived.AddRange(Physics2D.OverlapCircleAll(this.transform.position, 40f, 1 << 9));		
 		
 		return perceived.ToArray();
 	}
@@ -93,6 +97,14 @@ public class AntSoldier : Ant {
 				{
 					action.getTarget().GetComponent<SpiderDigger>().takeDamage(this.strength);
 				}
+				else if(action.getTarget().tag == "TermiteWorker")
+				{
+					action.getTarget().GetComponent<TermiteWorker>().takeDamage(this.strength);
+				}
+				else if(action.getTarget().tag == "TermiteSoldier")
+				{
+					action.getTarget().GetComponent<TermiteSoldier>().takeDamage(this.strength);
+				}
 				else
 					Debug.Log("Je ne reconnais pas cet ennemi");
 				break;
@@ -145,6 +157,14 @@ public class AntSoldier : Ant {
 			float angle = Vector3.Angle (referenceForward, direction);	
 			float sign = Mathf.Sign (Vector3.Dot (new Vector3 (1, 0, 0), direction));			
 			transform.rotation = Quaternion.Euler (new Vector3 (0, 0, angle * -sign));
+		}
+		
+		// Animation
+		if(animation != null) {
+			if(rigidbody2D.velocity.magnitude > 0)
+				this.animator.SetBool("moving", true);
+			else
+				this.animator.SetBool("moving", false);
 		}
 		
 	}

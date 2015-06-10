@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class GroundSelection : MonoBehaviour {
 
-	public Text text;
+	/*public Text text;
 	GameObject camera;
 
 	// Use this for initialization
@@ -24,5 +24,5 @@ public class GroundSelection : MonoBehaviour {
 			text.text = "Sous-sol";	
 			camera.transform.position = new Vector3(2.5f, 0f,-10f);
 		}
-	}
+	}*/
 }

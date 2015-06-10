@@ -6,7 +6,7 @@ public class SpiderWanderer : Spider {
 	
 	
 	protected override void initialisation () {	
-		this.animation = this.gameObject.GetComponent<Animator>();
+		this.animator = this.gameObject.GetComponent<Animator>();
 	}
 	
 	protected override Collider2D[] getPerception(){
@@ -19,7 +19,7 @@ public class SpiderWanderer : Spider {
 		perceived.AddRange(Physics2D.OverlapCircleAll(this.transform.position, 0.5f, 1 << 8));
 		
 		// Pheromone Perception
-		perceived.AddRange(Physics2D.OverlapCircleAll(this.transform.position, 40f, 1 << 9));		
+		//perceived.AddRange(Physics2D.OverlapCircleAll(this.transform.position, 40f, 1 << 9));		
 		
 		return perceived.ToArray();
 	}
@@ -78,7 +78,17 @@ public class SpiderWanderer : Spider {
 					action.getTarget().GetComponent<AntWorker>().takeDamage(this.strength);
 				}
 				else if(action.getTarget().tag == "AntSoldier")
+				{
 					action.getTarget().GetComponent<AntSoldier>().takeDamage(this.strength);
+				}
+				else if(action.getTarget().tag == "TermiteWorker")
+				{
+					action.getTarget().GetComponent<TermiteWorker>().takeDamage(this.strength);
+				}
+				else if(action.getTarget().tag == "TermiteSoldier")
+				{
+					action.getTarget().GetComponent<TermiteSoldier>().takeDamage(this.strength);
+				}
 				else
 					Debug.Log("Je ne reconnais pas cet ennemi");
 				break;
@@ -126,9 +136,9 @@ public class SpiderWanderer : Spider {
 		// Animation
 		if(animation != null) {
 			if(rigidbody2D.velocity.magnitude > 0)
-				animation.SetBool("moving", true);
+				this.animator.SetBool("moving", true);
 			else
-				animation.SetBool("moving", false);
+				this.animator.SetBool("moving", false);
 		}
 	}
 }

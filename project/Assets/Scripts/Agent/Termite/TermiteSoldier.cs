@@ -2,16 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class SpiderDigger : Spider {
+public class TermiteSoldier : Termite {
 
-	public GameObject hole;
-	private bool isDigging = true;
-	
-	protected override void initialisation () {		
-		this.hole = Instantiate(hole,transform.position,transform.rotation) as GameObject;
+
+	protected override void initialisation() {
 		this.animator = this.gameObject.GetComponent<Animator>();
 	}
-
+	
 	protected override Collider2D[] getPerception(){
 		List<Collider2D> perceived = new List<Collider2D>();
 		
@@ -22,7 +19,7 @@ public class SpiderDigger : Spider {
 		perceived.AddRange(Physics2D.OverlapCircleAll(this.transform.position, 0.5f, 1 << 8));
 		
 		// Pheromone Perception
-		//perceived.AddRange(Physics2D.OverlapCircleAll(this.transform.position, 40f, 1 << 9));		
+		perceived.AddRange(Physics2D.OverlapCircleAll(this.transform.position, 40f, 1 << 9));		
 		
 		return perceived.ToArray();
 	}
@@ -31,13 +28,21 @@ public class SpiderDigger : Spider {
 		List<Action> actions = new List<Action>();
 		
 		List<GameObject> enemies = new List<GameObject>();
+		List<GameObject> food = new List<GameObject>();
+		//List<GameObject> pheromone = new List<GameObject>();
 		
 		List<Collider2D> border = new List<Collider2D>();
-
-		foreach (Collider2D collider in perceptions) {
-			if (isEnemy (collider.gameObject)) {
-				enemies.Add (collider.gameObject);
+		
+		foreach(Collider2D collider in perceptions){
+			if(isEnemy(collider.gameObject)){
+				enemies.Add(collider.gameObject);
 			}
+			if(isFood(collider.gameObject)){
+				food.Add(collider.gameObject);
+			}
+			/*if(isPheromone(collider.gameObject)){
+				ennemy.Add(collider.gameObject);
+			}*/
 			
 			if(collider.gameObject.tag == "Border") {
 				border.Add(collider);
@@ -48,35 +53,36 @@ public class SpiderDigger : Spider {
 			actions.Add(new Action("avoidCollision", null));
 		}
 		else {
-			//if there is some enemies in the field of view
-			if (enemies.Count > 0) {
-				GameObject enemy = this.getClosestEntity (enemies);
-				if (Vector2.Distance (this.transform.position, enemy.transform.position) < 0.3f) {
-						actions.Add (new Action ("attack", enemy));
-				} else {
-						actions.Add (new Action ("seek", enemy));
+			if(isHome == true) {
+				if(Vector2.Distance(this.transform.position, homeOut.transform.position) < 0.3f){
+					actions.Add(new Action("teleportationOut", null));
 				}
-			} 
-			else 
-			{
-				if (Vector2.Distance (this.transform.position, hole.transform.position) < 0.3f)
+				else{
+					actions.Add(new Action("seek", homeOut));
+				}
+			}
+			else {
+				//if there is some enemies in the field of view
+				if(enemies.Count > 0) 
 				{
-					if (isDigging == true) {
-						//Debug.Log("Construct the hole");
-						actions.Add(new Action("constructHole", null));
+					GameObject enemy = this.getClosestEntity(enemies);
+					if(Vector2.Distance(this.transform.position, enemy.transform.position) < 0.3f){
+						actions.Add(new Action("attack", enemy));
+					}					
+					else {
+						actions.Add(new Action("seek", enemy));
 					}
 				}
 				else
 				{
-					actions.Add (new Action ("seek", this.hole));
-				}	
+					actions.Add(new Action("wandering", null));
+				}
 			}
 		}
 		return actions;
 	}
 	
-	protected override Vector2 applyAction(List<Action> actions)
-	{
+	protected override Vector2 applyAction(List<Action> actions) {
 		Vector2 direction = new Vector2 (); // = new Vector2 (1f,1f);
 		
 		foreach(Action action in actions)
@@ -84,7 +90,15 @@ public class SpiderDigger : Spider {
 			switch(action.getBehaviour())
 			{
 			case "attack" :
-				if(action.getTarget().tag == "AntWorker")
+				if(action.getTarget().tag == "SpiderWanderer")
+				{
+					action.getTarget().GetComponent<SpiderWanderer>().takeDamage(this.strength);
+				}
+				else if(action.getTarget().tag == "SpiderDigger")
+				{
+					action.getTarget().GetComponent<SpiderDigger>().takeDamage(this.strength);
+				}
+				else if(action.getTarget().tag == "AntWorker")
 				{
 					action.getTarget().GetComponent<AntWorker>().takeDamage(this.strength);
 				}
@@ -92,23 +106,27 @@ public class SpiderDigger : Spider {
 				{
 					action.getTarget().GetComponent<AntSoldier>().takeDamage(this.strength);
 				}
-				else if(action.getTarget().tag == "TermiteWorker")
-				{
-					action.getTarget().GetComponent<TermiteWorker>().takeDamage(this.strength);
-				}
-				else if(action.getTarget().tag == "TermiteSoldier")
-				{
-					action.getTarget().GetComponent<TermiteSoldier>().takeDamage(this.strength);
-				}
 				else
 					Debug.Log("Je ne reconnais pas cet ennemi");
 				break;
-			case "constructHole" :
-				this.constructHole();
+			case "wandering" :
+				direction += this.wanderingBehaviour.run(this.gameObject);
 				break;
 			case "seek" :
 				direction += this.seekBehaviour.run(this.gameObject, action.getTarget());
 				break;
+			}
+			
+			if(action.getBehaviour() == "teleportationIn")
+			{
+				this.transform.position = homeOut.transform.position;
+				this.isHome = true;
+			}
+			if(action.getBehaviour() == "teleportationOut")
+			{
+				this.transform.position = homeIn.transform.position;
+				this.transform.rotation = Quaternion.AngleAxis(Random.Range(-180f,180f), new Vector3(0f,0f,1f));
+				this.isHome = false;
 			}
 			
 			if(action.getBehaviour() == "avoidCollision")
@@ -131,7 +149,6 @@ public class SpiderDigger : Spider {
 	}
 	
 	protected override void move(Vector2 direction) {
-		
 		// Kinematic movement
 		rigidbody2D.velocity = direction.normalized * speed;
 		
@@ -145,24 +162,12 @@ public class SpiderDigger : Spider {
 		
 		// Animation
 		if(animation != null) {
-			if( (rigidbody2D.velocity.magnitude > 0 || isDigging) && Simulator.running)
+			if(rigidbody2D.velocity.magnitude > 0)
 				this.animator.SetBool("moving", true);
 			else
 				this.animator.SetBool("moving", false);
 		}
+		
 	}
 	
-	private void constructHole()
-	{
-		if(hole.transform.localScale.x >= 6f && hole.transform.localScale.y >= 6f)
-		{
-			isDigging = false;
-		}
-		else
-		{
-			//Debug.Log("+0.5");
-			hole.transform.localScale += new Vector3(0.03f,0.03f,0);
-		}
-	}
-
 }

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public abstract class Insect : AbstractAgent {
 	
 	// Caracteristics
-	public int speed;
+	public float speed;
 	public int life;
 	public int strength;
 	
@@ -18,7 +18,7 @@ public abstract class Insect : AbstractAgent {
 	protected Wandering wanderingBehaviour = new Wandering();
 	
 	// Animation
-	protected Animator animation;
+	protected Animator animator;
 	
 	
 	bool isGate(GameObject gameObject) {
