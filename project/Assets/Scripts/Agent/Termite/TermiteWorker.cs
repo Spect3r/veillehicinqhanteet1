@@ -235,7 +235,7 @@ public sealed class TermiteWorker : Termite {
 		}
 		
 		// Animation
-		if(animation != null) {
+		if(animator != null) {
 			if(rigidbody2D.velocity.magnitude > 0)
 				this.animator.SetBool("moving", true);
 			else

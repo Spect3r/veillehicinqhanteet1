@@ -50,7 +50,7 @@ public class AntQueen : Ant {
 
 
 	private void born() {
-		Debug.Log(this.tag+ " : " +warehouse.GetComponent<Warehouse>().getFoodQuantity());
+		//Debug.Log(this.tag+ " : " +warehouse.GetComponent<Warehouse>().getFoodQuantity());
 		
 		if(warehouse.GetComponent<Warehouse>().getFoodQuantity() > 5)
 		{

@@ -15,7 +15,7 @@ GameObject:
   - 114: {fileID: 11482182}
   m_Layer: 0
   m_Name: AntCocoon
-  m_TagString: Cocoon
+  m_TagString: AntCocoon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
