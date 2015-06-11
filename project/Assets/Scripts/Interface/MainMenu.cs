@@ -10,9 +10,13 @@ public class MainMenu : MonoBehaviour {
 	bool displayMainMenu = false;
 	
 	
+	bool simulationEnd = false;
+	string winner = "";
+	
+	
 	void Update () {
 	
-		if(Input.GetKeyDown(KeyCode.P) && !displayStat && !displayMainMenu) {
+		if(Input.GetKeyDown(KeyCode.P) && !displayStat && !displayMainMenu && !simulationEnd) {
 			
 			if(!paused) {
 				Pause();
@@ -44,10 +48,24 @@ public class MainMenu : MonoBehaviour {
 			else
 				displayStat=true;
 		}
+		
+		if(Statistics.getTotalTermite() == 0 && Statistics.getTotalSpider() == 0) {
+			simulationEnd = true;
+			winner = "Ant";
+		}
+		if(Statistics.getTotalAnt() == 0 && Statistics.getTotalTermite() == 0) {
+			simulationEnd = true;
+			winner = "Spider";
+		}
+		if(Statistics.getTotalAnt() == 0 && Statistics.getTotalSpider() == 0) {
+			simulationEnd = true;
+			winner = "Termite";
+		}
+			
 	}
 	
 	void OnGUI() {
-		if(paused && !displayStat && !displayMainMenu) {		
+		if(paused && !displayStat && !displayMainMenu && !simulationEnd) {		
 			GUI.Box (new Rect ( 0, 0, Screen.width, 30), "Paused");
 		}
 		
@@ -56,8 +74,10 @@ public class MainMenu : MonoBehaviour {
 			
 			GUI.Box (new Rect ( 0, 0, Screen.width, Screen.height), "Main Menu");
 			
-			if(GUI.Button (new Rect ( (Screen.width/2)-100,(Screen.height/2)-100, 200,60 ), "Resume"))
+			if(GUI.Button (new Rect ( (Screen.width/2)-100,(Screen.height/2)-100, 200,60 ), "Resume")) {
 				UnPause();
+				displayMainMenu = false;
+			}
 				
 			if(GUI.Button (new Rect ( (Screen.width/2)-100,(Screen.height/2)-30, 200,60 ), "Restart")) {				
 				Application.LoadLevel("main");
@@ -76,6 +96,21 @@ public class MainMenu : MonoBehaviour {
 			GUI.Box (new Rect ( (Screen.width/2)-100,(Screen.height/2)-100, 200, 30), "Ant count : " + Statistics.getTotalAnt());
 			GUI.Box (new Rect ( (Screen.width/2)-100,(Screen.height/2)-30, 200, 30), "Spider count : " + Statistics.getTotalSpider());
 			GUI.Box (new Rect ( (Screen.width/2)-100,(Screen.height/2)+40, 200, 30), "Termite count : " + Statistics.getTotalTermite());
+		}
+		
+		if(simulationEnd) {
+			Pause();
+			
+			GUI.skin.label.fontSize = GUI.skin.box.fontSize = GUI.skin.button.fontSize = fontSize;
+			
+			GUI.Box (new Rect ( 0, 0, Screen.width, Screen.height), "End of Simulation");
+			
+			GUI.Box (new Rect ( (Screen.width/2)-100,(Screen.height/2)-30, 200, 30), "The winner is :"+winner);
+			
+			if(GUI.Button (new Rect ( (Screen.width/2)-100,(Screen.height/2)+40, 200,30 ), "Ok")) {				
+				displayMainMenu = true;
+				simulationEnd = false;
+			}
 		}
 	}
 	
