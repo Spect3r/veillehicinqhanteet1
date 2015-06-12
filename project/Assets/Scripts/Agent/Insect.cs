@@ -11,6 +11,7 @@ public abstract class Insect : AbstractAgent {
 	
 	// State
 	protected bool isInCollision = false;
+	protected bool isDead = false;
 	
 	// Behaviour
 	protected SeekBehaviour seekBehaviour = new SeekBehaviour();
@@ -47,10 +48,11 @@ public abstract class Insect : AbstractAgent {
 	{
 		this.life -= damage;
 		
-		if(life <= 0)
+		if(life <= 0 && !this.isDead)
 		{
 			Statistics.removeInsect(this.tag);
 			Destroy(this.gameObject);
+			this.isDead = true;
 		}
 	}
 }

@@ -16,7 +16,7 @@ public class SpiderDigger : Spider {
 		List<Collider2D> perceived = new List<Collider2D>();
 		
 		// Visual Perception
-		perceived.AddRange(Physics2D.OverlapCircleAll(this.transform.position, 4f, 1 << 0));
+		perceived.AddRange(Physics2D.OverlapCircleAll(this.transform.position, 6f, 1 << 0));
 		
 		// Collision Perception
 		perceived.AddRange(Physics2D.OverlapCircleAll(this.transform.position, 0.5f, 1 << 8));

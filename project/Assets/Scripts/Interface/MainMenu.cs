@@ -105,13 +105,18 @@ public class MainMenu : MonoBehaviour {
 			
 			GUI.Box (new Rect ( 0, 0, Screen.width, Screen.height), "End of Simulation");
 			
-			GUI.Box (new Rect ( (Screen.width/2)-100,(Screen.height/2)-30, 200, 30), "The winner is :"+winner);
+			GUI.Box (new Rect ( (Screen.width/2)-100,(Screen.height/2)-30, 200, 30), "The winner is : "+winner);
 			
-			if(GUI.Button (new Rect ( (Screen.width/2)-100,(Screen.height/2)+40, 200,30 ), "Ok")) {				
-				displayMainMenu = true;
-				simulationEnd = false;
+			if(GUI.Button (new Rect ( (Screen.width/2)-100,(Screen.height/2)+40, 200,30 ), "Ok")) {
+				reload();
 			}
 		}
+	}
+	
+	void reload() {
+		simulationEnd = false;
+		displayStat = false;			
+		displayMainMenu = true;
 	}
 	
 	void Pause() {

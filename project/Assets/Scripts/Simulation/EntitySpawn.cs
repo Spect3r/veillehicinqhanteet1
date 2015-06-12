@@ -30,7 +30,7 @@ public class EntitySpawn : MonoBehaviour {
 		GameObject antHome = GameObject.FindGameObjectWithTag("AntHome");
 		Vector2 antHomePosition = new Vector2(antHome.transform.position.x, antHome.transform.position.y);
 		
-		for (int i = 0; i<20; i++) {
+		for (int i = 0; i<50; i++) {
 			// Random position
 			Vector2 position = Random.insideUnitCircle * 10f + antHomePosition;
 			
@@ -41,7 +41,7 @@ public class EntitySpawn : MonoBehaviour {
 			
 			Statistics.addInsect("AntWorker");
 		}
-		for (int i = 0; i<20; i++) {
+		for (int i = 0; i<50; i++) {
 			// Random position
 			Vector2 position = Random.insideUnitCircle * 10f + antHomePosition;
 				
@@ -52,21 +52,12 @@ public class EntitySpawn : MonoBehaviour {
 			
 			Statistics.addInsect("AntSoldier");
 		}
-		/*for (int i = 0; i<1; i++) {
-			// Random position
-			Vector2 position = new Vector2(414.0f,18.0f);
-			
-			// Random orientation
-			Quaternion orientation = Quaternion.AngleAxis(Random.Range(-180f,180f), Vector3.forward);
-			
-			Instantiate (antQueen, position, orientation);			
-		}*/
 		
 		/** Termite **/
 		GameObject termiteHome = GameObject.FindGameObjectWithTag("TermiteHome");
 		Vector2 termiteHomePosition = new Vector2(termiteHome.transform.position.x, termiteHome.transform.position.y);
 		
-		for (int i = 0; i<20; i++) {
+		for (int i = 0; i<50; i++) {
 			// Random position
 			Vector2 position = Random.insideUnitCircle * 10f + termiteHomePosition;
 			
@@ -77,7 +68,7 @@ public class EntitySpawn : MonoBehaviour {
 			
 			Statistics.addInsect("TermiteWorker");
 		}
-		for (int i = 0; i<20; i++) {
+		for (int i = 0; i<50; i++) {
 			// Random position
 			Vector2 position = Random.insideUnitCircle * 10f + termiteHomePosition;
 			
@@ -90,7 +81,7 @@ public class EntitySpawn : MonoBehaviour {
 		}
 		
 		/** Spider **/		
-		for (int i = 0; i<25; i++) {
+		for (int i = 0; i<90; i++) {
 			// Random position
 			Vector2 position = new Vector2(Random.Range(-50.0F, 50.0F), Random.Range(-50.0F, 50.0F)) + groundPosition;
 			
@@ -101,9 +92,9 @@ public class EntitySpawn : MonoBehaviour {
 			
 			Statistics.addInsect("SpiderWanderer");			
 		}
-		for (int i = 0; i<15; i++) {
+		for (int i = 0; i<10; i++) {
 			// Random position
-			Vector2 position = new Vector2(Random.Range(-50.0F, 50.0F), Random.Range(-50.0F, 50.0F)) + groundPosition;
+			Vector2 position = new Vector2(Random.Range(-40.0F, 40.0F), Random.Range(-40.0F, 40.0F)) + groundPosition;
 			
 			// Random orientation
 			Quaternion orientation = Quaternion.AngleAxis(Random.Range(-180f,180f), Vector3.forward);
