@@ -44,9 +44,9 @@ Rigidbody2D:
   m_GravityScale: 1
   m_FixedAngle: 0
   m_IsKinematic: 1
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!58 &5891242
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -56,7 +56,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Radius: .5
+  m_Radius: .600000024
   m_Center: {x: 0, y: 0}
 --- !u!95 &9591242
 Animator:

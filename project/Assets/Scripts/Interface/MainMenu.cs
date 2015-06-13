@@ -12,6 +12,7 @@ public class MainMenu : MonoBehaviour {
 	
 	bool simulationEnd = false;
 	string winner = "";
+	bool win = false;
 	
 	
 	void Update () {
@@ -49,15 +50,15 @@ public class MainMenu : MonoBehaviour {
 				displayStat=true;
 		}
 		
-		if(Statistics.getTotalTermite() == 0 && Statistics.getTotalSpider() == 0) {
+		if(Statistics.getTotalTermite() == 0 && Statistics.getTotalSpider() == 0 && !simulationEnd) {
 			simulationEnd = true;
 			winner = "Ant";
 		}
-		if(Statistics.getTotalAnt() == 0 && Statistics.getTotalTermite() == 0) {
+		if(Statistics.getTotalAnt() == 0 && Statistics.getTotalTermite() == 0 && !simulationEnd) {
 			simulationEnd = true;
 			winner = "Spider";
 		}
-		if(Statistics.getTotalAnt() == 0 && Statistics.getTotalSpider() == 0) {
+		if(Statistics.getTotalAnt() == 0 && Statistics.getTotalSpider() == 0 && !simulationEnd) {
 			simulationEnd = true;
 			winner = "Termite";
 		}
@@ -98,7 +99,7 @@ public class MainMenu : MonoBehaviour {
 			GUI.Box (new Rect ( (Screen.width/2)-100,(Screen.height/2)+40, 200, 30), "Termite count : " + Statistics.getTotalTermite());
 		}
 		
-		if(simulationEnd) {
+		if(simulationEnd && !win) {
 			Pause();
 			
 			GUI.skin.label.fontSize = GUI.skin.box.fontSize = GUI.skin.button.fontSize = fontSize;
@@ -108,13 +109,13 @@ public class MainMenu : MonoBehaviour {
 			GUI.Box (new Rect ( (Screen.width/2)-100,(Screen.height/2)-30, 200, 30), "The winner is : "+winner);
 			
 			if(GUI.Button (new Rect ( (Screen.width/2)-100,(Screen.height/2)+40, 200,30 ), "Ok")) {
-				reload();
+				keepRunning();
 			}
 		}
 	}
 	
-	void reload() {
-		simulationEnd = false;
+	void keepRunning() {
+		win = true;
 		displayStat = false;			
 		displayMainMenu = true;
 	}

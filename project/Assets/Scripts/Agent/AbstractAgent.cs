@@ -17,18 +17,17 @@ public abstract class AbstractAgent : MonoBehaviour {
 		if(Simulator.running) {
 			/* Perceptions and decisions */
 			if(Simulator.state == true) {
-				//Debug.Log(name + " - Emit Influence !");
 				
 				// Perception
 				perceptions = getPerception();
+				
 				// Decision making
 				actions = makeDecision(perceptions);
 				
 			}
 			/* Apply actions */
 			else {
-				//Debug.Log(name + " - Apply Influence !");
-				
+							
 				// Apply behavior foreach actions
 				Vector2 direction = applyAction(actions);
 				
